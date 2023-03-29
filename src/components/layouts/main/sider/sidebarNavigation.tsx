@@ -22,6 +22,23 @@ export interface SidebarNavigationItem {
 
 export const sidebarNavigation: SidebarNavigationItem[] = [
   {
+    title: 'common.apps',
+    key: 'Users',
+    icon: <UserOutlined />,
+    children: [
+      {
+        title: 'Clinician',
+        key: 'feed',
+        url: '/data-tables',
+      },
+      {
+        title: 'Patient',
+        key: 'Patient',
+        url: '/user/patient',
+      },
+    ],
+  },
+  {
     title: 'common.nft-dashboard',
     key: 'nft-dashboard',
     // TODO use path variable
