@@ -25,20 +25,20 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({ isTwoColumnsLayout
     </S.SearchColumn>
   ) : (
     <>
-      <Col lg={10} xxl={8}>
+      {/* <Col lg={10} xxl={8}>
         <HeaderSearch />
       </Col>
       <Col>
         <S.GHButton />
-      </Col>
+      </Col> */}
     </>
   );
 
   return (
     <Row justify="space-between" align="middle">
-      {leftSide}
+      {/* {leftSide} */}
 
-      <S.ProfileColumn xl={8} xxl={7} $isTwoColumnsLayout={isTwoColumnsLayout}>
+      <S.ProfileColumn xl={8} xxl={7} style={{marginLeft:'auto'}} $isTwoColumnsLayout={isTwoColumnsLayout}>
         <Row align="middle" justify="end" gutter={[10, 10]}>
           <Col>
             <Row gutter={[{ xxl: 10 }, { xxl: 10 }]}>

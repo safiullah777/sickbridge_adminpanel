@@ -22,14 +22,14 @@ export interface SidebarNavigationItem {
 
 export const sidebarNavigation: SidebarNavigationItem[] = [
   {
-    title: 'common.apps',
+    title: 'Users',
     key: 'Users',
     icon: <UserOutlined />,
     children: [
       {
         title: 'Clinician',
         key: 'feed',
-        url: '/data-tables',
+        url: '/user/clinician',
       },
       {
         title: 'Patient',
@@ -38,6 +38,22 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
       },
     ],
   },
+
+  {
+    title: 'Content Management',
+    key: 'content-management',
+    // TODO use path variable
+    url: '/content-management',
+    icon: <NftIcon />,
+  },
+  {
+    title: 'Transactions',
+    key: 'transaction',
+    // TODO use path variable
+    url: '/transactions',
+    icon: <NftIcon />,
+  },
+
   {
     title: 'common.nft-dashboard',
     key: 'nft-dashboard',

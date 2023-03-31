@@ -11,7 +11,7 @@ export const Tables: React.FC = () => {
     <>
       <S.TablesWrapper>
         <S.Card id="basic-table" title={t('tables.basicTable')}  padding="1.25rem 1.25rem 0">
-          <BasicTable />
+          <BasicTable columns={[]} data={[]} loading={false} pagination={{}} />
         </S.Card>
         <S.Card id="tree-table" title={t('tables.treeTable')} padding="1.25rem 1.25rem 0">
           <TreeTable />

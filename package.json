@@ -72,7 +72,7 @@
   },
   "scripts": {
     "start": "NODE_OPTIONS=--openssl-legacy-provider && yarn buildThemes && craco start",
-    "build": "NODE_OPTIONS=--openssl-legacy-provider && yarn buildThemes && craco build",
+    "build": "yarn buildThemes && craco build",
     "test": "craco test",
     "eject": "craco eject",
     "lint": "eslint \"*/**/*.{js,ts,tsx}\" --fix",

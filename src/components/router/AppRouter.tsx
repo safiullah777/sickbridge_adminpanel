@@ -17,6 +17,9 @@ import { withLoading } from '@app/hocs/withLoading.hoc';
 import NftDashboardPage from '@app/pages/DashboardPages/NftDashboardPage';
 import MedicalDashboardPage from '@app/pages/DashboardPages/MedicalDashboardPage';
 import Patient from '@app/pages/Patient';
+import Clinician from '@app/pages/Clinician';
+import ContentManagement from '@app/pages/ContentManagement';
+import Transaction from '@app/pages/Transactions';
 
 const NewsFeedPage = React.lazy(() => import('@app/pages/NewsFeedPage'));
 const KanbanPage = React.lazy(() => import('@app/pages/KanbanPage'));
@@ -136,7 +139,10 @@ export const AppRouter: React.FC = () => {
           <Route path={MEDICAL_DASHBOARD_PATH} element={<MedicalDashboard />} />
           <Route path="user">
             <Route path="patient" element={<Patient />} />
+            <Route path="clinician" element={<Clinician />} />
           </Route>
+          <Route path='content-management' element={<ContentManagement />} />
+          <Route path='transactions' element={<Transaction />} />
           <Route path="apps">
             <Route path="feed" element={<NewsFeed />} />
             <Route path="kanban" element={<Kanban />} />

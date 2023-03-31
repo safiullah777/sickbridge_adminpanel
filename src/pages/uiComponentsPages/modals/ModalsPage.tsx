@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@app/components/common/buttons/Button/Button';
 import { Modal, InfoModal, SuccessModal, WarningModal, ErrorModal } from '@app/components/common/Modal/Modal';
 import { PageTitle } from '@app/components/common/PageTitle/PageTitle';
-import * as S from '@app/pages/uiComponentsPages//UIComponentsPage.styles';
+import * as S from '@app/pages/uiComponentsPages//UIComponentsPage.styles'; 
 
 const ModalsPage: React.FC = () => {
   const { t } = useTranslation();
