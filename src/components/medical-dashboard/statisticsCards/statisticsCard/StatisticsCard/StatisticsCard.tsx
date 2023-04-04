@@ -27,20 +27,10 @@ export const StatisticsCard: React.FC<StatisticsCardProps> = ({ name, value, pre
   return (
     <S.StatisticCard padding="0.5rem" $color={color}>
       <Row wrap={false} gutter={[isTabletOrHigher ? 10 : 5, 0]}>
-        <Col>
-          <S.IconWrapper>
-            <S.Icon component={Icon} />
-          </S.IconWrapper>
-        </Col>
-
         <Col flex={1}>
           <Row justify="space-between" align="middle" wrap={false}>
             <Col>
               <StatisticsInfo name={t(name)} value={value} prevValue={prevValue} />
-            </Col>
-
-            <Col>
-              <StatisticsProgress color={themeObject[theme][color]} unit={unit} value={value} />
             </Col>
           </Row>
         </Col>

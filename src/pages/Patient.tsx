@@ -10,6 +10,7 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 // import * as S from './';
 import { Select, Option } from '@app/components/common/selects/Select/Select';
+import { Input } from '@app/components/common/inputs/Input/Input';
 
 const Patient: FC = () => {
   const { t } = useTranslation();
@@ -17,6 +18,10 @@ const Patient: FC = () => {
     {
       title: t('common.name'),
       dataIndex: 'name',
+    },
+    {
+      title: t('common.email'),
+      dataIndex: 'email',
     },
     {
       title: t('common.age'),
@@ -34,8 +39,8 @@ const Patient: FC = () => {
         return (
           <Space>
             <Button
-              type="primary"
               //  onClick={() => handleDeleteRow(record.key)}
+              type="primary"
             >
               {t('details')}
             </Button>
@@ -50,7 +55,16 @@ const Patient: FC = () => {
       <TablesWrapper>
         <Row style={{ marginBottom: '10px', justifyContent: 'flex-end', alignItems: 'flex-end', gap: '10px' }}>
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-            <span style={{ color: '#000', font: '16px', fontWeight: 600 }}>Status:</span>
+            <span className='ant-collapse-header-text'>Name:</span>
+            <Input />
+          </div>
+
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <span className='ant-collapse-header-text'>Email:</span>
+            <Input />
+          </div>
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <span className='ant-collapse-header-text'>Status:</span>
             <Select defaultValue="doctor" width={160} allowClear>
               <Option value="active">Active</Option>
               <Option value="block">Block</Option>
@@ -67,12 +81,14 @@ const Patient: FC = () => {
                 address: 'street 1 block A ,London',
                 age: 20,
                 name: 'usama',
+                email: 'textuser@gmail.com',
                 // tags: [{ priority: 1, value: 'low' },{ priority: 2, value: 'low' }],
                 key: 1,
               },
               {
                 address: 'street 1 block A ,London',
                 age: 20,
+                email: 'textuser@gmail.com',
                 name: 'usama',
                 //   tags: [],
                 key: 2,

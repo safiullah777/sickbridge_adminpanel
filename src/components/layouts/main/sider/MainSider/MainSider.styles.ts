@@ -12,7 +12,7 @@ export const Sider = styled(Layout.Sider)`
   min-height: 100vh;
   max-height: 100vh;
 
-  color: var(--text-secondary-color);
+  color: black;
 
   @media only screen and ${media.md} {
     right: unset;

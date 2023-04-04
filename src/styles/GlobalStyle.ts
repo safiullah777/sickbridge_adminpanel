@@ -25,7 +25,15 @@ export default createGlobalStyle`
     ${commonThemeVariables};
     ${antOverrideCssVariables};
   } 
-
+  .cards .ant-card-body{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+.ant-table-wrapper{
+  width:100%;
+}
   [data-no-transition] * {
     transition: none !important;
   }
@@ -38,7 +46,10 @@ export default createGlobalStyle`
       }
     }
   }
-
+  .ant-btn-primary{
+    background-color: #3db19e !important;
+    border:none !important;
+  }
   .search-overlay {
     box-shadow: var(--box-shadow);
 

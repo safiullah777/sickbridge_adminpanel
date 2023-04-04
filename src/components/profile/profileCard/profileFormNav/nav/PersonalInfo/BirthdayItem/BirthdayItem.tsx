@@ -8,7 +8,7 @@ export const BirthdayItem: React.FC = () => {
 
   return (
     <BaseButtonsForm.Item name="birthday" label={t('profile.nav.personalInfo.birthday')}>
-      <S.BirthdayPicker format="L" />
+      <S.BirthdayPicker disabled={true} format="L" />
     </BaseButtonsForm.Item>
   );
 };

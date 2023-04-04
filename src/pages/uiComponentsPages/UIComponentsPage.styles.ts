@@ -10,6 +10,7 @@ export const Card = styled(CommonCard)`
   }
   .ant-card-body {
     display: flex;
+    flex
     flex-wrap: wrap;
     gap: 1.25rem;
     align-items: center;

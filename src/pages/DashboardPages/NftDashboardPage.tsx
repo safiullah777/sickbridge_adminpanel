@@ -35,7 +35,6 @@ const MedicalDashboardPage: React.FC = () => {
             <RecentActivity />
           </Col>
         </Row>
-        <References />
       </S.LeftSideCol>
 
       <S.RightSideCol xl={8} xxl={7}>

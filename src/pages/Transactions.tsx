@@ -11,7 +11,7 @@ import { ColumnsType } from 'antd/es/table';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Title from 'antd/lib/typography/Title';
-import { EyeFilled } from '@ant-design/icons';
+import { EyeFilled, PrinterOutlined } from '@ant-design/icons';
 // import * as S from './';
 import { Modal, InfoModal, SuccessModal, WarningModal, ErrorModal } from '@app/components/common/Modal/Modal';
 import * as S from '@app/pages/uiComponentsPages//UIComponentsPage.styles'; 
@@ -58,6 +58,13 @@ const Transaction: FC = () => {
             >
               <EyeFilled />
             </Button>
+            <Button
+              type="primary"
+              onClick={() => setIsBasicModalOpen(true)}
+              //  onClick={() => handleDeleteRow(record.key)}
+            >
+              <PrinterOutlined />
+            </Button>
           </Space>
         );
       },
@@ -93,7 +100,7 @@ const Transaction: FC = () => {
       <TablesWrapper>
           <Row style={{ marginBottom: '10px', justifyContent: 'flex-end', alignItems: 'flex-end', gap: '10px' }}>
             <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-              <span style={{ color: '#000', font: '16px', fontWeight: 600 }}>Role:</span>
+              <span  className='ant-collapse-header-text'>Role:</span>
               <Select defaultValue="Admin" width={160} allowClear>
                 <Option value="Admin">Admin</Option>
                 <Option value="Patient">Patient</Option>
@@ -101,7 +108,7 @@ const Transaction: FC = () => {
               </Select>
             </div>
             <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-              <span style={{ color: '#000', font: '16px', fontWeight: 600 }}>Status:</span>
+              <span className='ant-collapse-header-text'>Status:</span>
               <Select defaultValue="pending" width={160} allowClear>
                 <Option value="active">Pending</Option>
                 <Option value="block">Approaved</Option>

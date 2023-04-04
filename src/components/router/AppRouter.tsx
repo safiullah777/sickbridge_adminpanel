@@ -20,6 +20,7 @@ import Patient from '@app/pages/Patient';
 import Clinician from '@app/pages/Clinician';
 import ContentManagement from '@app/pages/ContentManagement';
 import Transaction from '@app/pages/Transactions';
+import Dashboard from '@app/pages/Dashboard';
 
 const NewsFeedPage = React.lazy(() => import('@app/pages/NewsFeedPage'));
 const KanbanPage = React.lazy(() => import('@app/pages/KanbanPage'));
@@ -135,7 +136,7 @@ export const AppRouter: React.FC = () => {
     <BrowserRouter>
       <Routes>
         <Route path={NFT_DASHBOARD_PATH} element={protectedLayout}>
-          <Route index element={<NftDashboard />} />
+          <Route index element={<Dashboard />} />
           <Route path={MEDICAL_DASHBOARD_PATH} element={<MedicalDashboard />} />
           <Route path="user">
             <Route path="patient" element={<Patient />} />

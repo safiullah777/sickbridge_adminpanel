@@ -132,17 +132,14 @@ export const PersonalInfo: React.FC = () => {
           </Col>
 
           <Col xs={24} md={12}>
-            <FirstNameItem />
+            <FirstNameItem  />
           </Col>
 
           <Col xs={24} md={12}>
             <LastNameItem />
           </Col>
 
-          <Col xs={24} md={12}>
-            <NicknameItem />
-          </Col>
-
+         
           <Col xs={24} md={12}>
             <SexItem />
           </Col>
@@ -187,27 +184,14 @@ export const PersonalInfo: React.FC = () => {
             <AddressItem number={1} />
           </Col>
 
-          <Col xs={24} md={12}>
-            <AddressItem number={2} />
-          </Col>
+          
 
           <Col xs={24} md={12}>
             <ZipcodeItem />
           </Col>
 
-          <Col span={24}>
-            <BaseButtonsForm.Item>
-              <BaseButtonsForm.Title>{t('profile.nav.personalInfo.otherInfo')}</BaseButtonsForm.Title>
-            </BaseButtonsForm.Item>
-          </Col>
-
-          <Col xs={24} md={12}>
-            <WebsiteItem />
-          </Col>
-
-          <Col span={24}>
-            <SocialLinksItem />
-          </Col>
+         
+         
         </Row>
       </BaseButtonsForm>
     </Card>

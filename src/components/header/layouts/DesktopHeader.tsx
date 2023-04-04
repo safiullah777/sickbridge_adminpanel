@@ -46,9 +46,9 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({ isTwoColumnsLayout
                 <HeaderFullscreen />
               </Col>
 
-              <Col>
+              {/* <Col>
                 <NotificationsDropdown />
-              </Col>
+              </Col> */}
 
               <Col>
                 <SettingsDropdown />

@@ -63,7 +63,7 @@ export const LoginForm: React.FC = () => {
         >
           <Auth.FormInputPassword placeholder={t('common.password')} />
         </Auth.FormItem>
-        <Auth.ActionsWrapper>
+        {/* <Auth.ActionsWrapper>
           <BaseForm.Item name="rememberMe" valuePropName="checked" noStyle>
             <Auth.FormCheckbox>
               <S.RememberMeText>{t('login.rememberMe')}</S.RememberMeText>
@@ -71,37 +71,30 @@ export const LoginForm: React.FC = () => {
           </BaseForm.Item>
           <Link to="/auth/forgot-password">
             <S.ForgotPasswordText>{t('common.forgotPass')}</S.ForgotPasswordText>
-          </Link>
-        </Auth.ActionsWrapper>
+          </Link> 
+        </Auth.ActionsWrapper> */}
         <BaseForm.Item noStyle>
           <Auth.SubmitButton type="primary" htmlType="submit" loading={isLoading}>
             {t('common.login')}
           </Auth.SubmitButton>
         </BaseForm.Item>
-        <BaseForm.Item noStyle>
+        {/* <BaseForm.Item noStyle>
           <Auth.SocialButton type="default" htmlType="submit">
             <Auth.SocialIconWrapper>
               <GoogleIcon />
             </Auth.SocialIconWrapper>
             {t('login.googleLink')}
           </Auth.SocialButton>
-        </BaseForm.Item>
-        <BaseForm.Item noStyle>
+        </BaseForm.Item> */}
+        {/* <BaseForm.Item noStyle>
           <Auth.SocialButton type="default" htmlType="submit">
             <Auth.SocialIconWrapper>
               <FacebookIcon />
             </Auth.SocialIconWrapper>
             {t('login.facebookLink')}
           </Auth.SocialButton>
-        </BaseForm.Item>
-        <Auth.FooterWrapper>
-          <Auth.Text>
-            {t('login.noAccount')}{' '}
-            <Link to="/auth/sign-up">
-              <Auth.LinkText>{t('common.here')}</Auth.LinkText>
-            </Link>
-          </Auth.Text>
-        </Auth.FooterWrapper>
+        </BaseForm.Item> */}
+       
       </BaseForm>
     </Auth.FormWrapper>
   );

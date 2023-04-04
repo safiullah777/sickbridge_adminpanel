@@ -57,12 +57,16 @@ export const getDoctorsData = (): Promise<Doctor[]> => {
         },
         {
           id: 4,
-          name: 'Steve Wolfe',
-          specifity: 4,
+          name: 'Annabella Morton',
+          specifity: 3,
           rating: 5,
-          imgUrl: process.env.REACT_APP_ASSETS_BUCKET + '/doctors/steve.webp',
+          gps: {
+            latitude: 40.73061,
+            longitude: -73.935242,
+          },
+          imgUrl: process.env.REACT_APP_ASSETS_BUCKET + '/doctors/annabella-morton.webp',
           phone: '+X-XXX-XXX-XXXX',
-          address: '9 Wagon Street Ravenna, OH 44266',
+          address: '111 Foxrun Street Conyers, GA 30012',
         },
         {
           id: 5,

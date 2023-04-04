@@ -6,7 +6,7 @@ export interface HealthFactor {
 
 export const healthChartData: HealthFactor[] = [
   {
-    value: 50,
+    value: 510,
     name: 'medical-dashboard.health.lifestyle.title',
     description: 'medical-dashboard.health.lifestyle.description',
   },

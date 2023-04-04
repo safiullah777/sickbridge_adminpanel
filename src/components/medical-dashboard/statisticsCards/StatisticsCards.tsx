@@ -6,13 +6,13 @@ import { getStatistics, Statistic } from 'api/statistics.api';
 import { statistics as configStatistics } from 'constants/config/statistics';
 
 export const StatisticsCards: React.FC = () => {
-  const [statistics, setStatistics] = useState<Statistic[]>([]);
+  const [statistics, setStatistics] = useState<Statistic[]>([
+    { id: 1, prevValue: 1, unit: 'kg', value: 11 },
+    { id: 1, prevValue: 1, unit: 'kg', value: 11 },
+    { id: 1, prevValue: 1, unit: 'kg', value: 11 },
+  ]);
 
   const { isTablet } = useResponsive();
-
-  useEffect(() => {
-    getStatistics().then((res) => setStatistics(res));
-  }, []);
 
   const statisticsCards = useMemo(
     () =>
