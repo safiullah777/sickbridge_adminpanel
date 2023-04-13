@@ -8,15 +8,19 @@ import { Button, Col, Modal, Row, Space } from 'antd';
 import { Select, Option } from '@app/components/common/selects/Select/Select';
 import { ColumnsType } from 'antd/es/table';
 // import { Option } from 'antd/lib/mentions';
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Title from 'antd/lib/typography/Title';
 import { PersonalInfo } from '@app/components/profile/profileCard/profileFormNav/nav/PersonalInfo/PersonalInfo';
 // import * as S from './';
 import { Input } from '@app/components/common/inputs/Input/Input';
+import { useMounted } from '@app/hooks/useMounted';
+import { getAllUsers } from '@app/api/user';
+import { Table } from '@app/components/common/Table/Table';
 
 const Clinician: FC = () => {
   const { t } = useTranslation();
+  const [modalInfo, setModalInfo] = useState<object>({});
   const columns: ColumnsType<BasicTableRow> = [
     {
       title: t('common.name'),
@@ -27,26 +31,32 @@ const Clinician: FC = () => {
       dataIndex: 'email',
     },
     {
-      title: t('common.age'),
-      dataIndex: 'age',
+      title: 'Medical RegNo',
+      dataIndex: 'medicalRegNo',
     },
     {
       title: t('Clinician Role'),
-      dataIndex: 'clinicianRole',
+      dataIndex: 'clinician_role',
     },
     {
       title: t('common.address'),
       dataIndex: 'address',
     },
     {
-      title: t('tables.actions'),
+      title: 'Actions',
       dataIndex: 'actions',
       width: '15%',
-      render: (text: string, record: { name: string; key: number }) => {
+      render: (data) => {
         return (
           <Space>
-            <Button type="primary" onClick={() => setIsBasicModalOpen(true)}>
-              {t('details')}
+            <Button
+              onClick={() => {
+                setIsBasicModalOpen(true);
+                setModalInfo(data);
+              }}
+              type="primary"
+            >
+              details
             </Button>
           </Space>
         );
@@ -54,6 +64,41 @@ const Clinician: FC = () => {
     },
   ];
   const [isBasicModalOpen, setIsBasicModalOpen] = useState<boolean>(false);
+
+  const [patients, setPatients] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const { isMounted } = useMounted();
+  const [pageNo, setPageNo] = useState(1);
+  const [totalPages,setTotalPages]=useState(0)
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+
+      const res = (await getAllUsers({ limit: 10, page: pageNo, role: 'clinician', subRole: '' }));
+      console.log({ res });
+      setTotalPages(res.metaData?.numOfPages)
+      setPatients(res?.data.map((item: any) => ({ ...item, name: `${item.first_name} ${item.last_name}`, actions: item })));
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+  const fetch = useCallback(
+    async (a) => {
+      console.log({ a });
+      setLoading(true);
+      setPageNo(a);
+      // getBasicTableData(pagination).then((res) => {
+      const res = (await getAllUsers({ limit: 10, page: a, role: 'clinician', subRole: '' }));
+      if (isMounted.current) {
+        res?.data && setPatients(
+          res?.data.map((item: any) => ({ ...item, name: `${item.first_name} ${item.last_name}`, actions: item })),
+        );
+        setLoading(false);
+      }
+      // });
+    },
+    [isMounted],
+  );
   return (
     <div>
       <Modal
@@ -61,7 +106,7 @@ const Clinician: FC = () => {
         onOk={() => setIsBasicModalOpen(false)}
         onCancel={() => setIsBasicModalOpen(false)}
       >
-        <PersonalInfo />
+        <PersonalInfo user={modalInfo}  />
       </Modal>
       <PageTitle>{t('common.clinicians')}</PageTitle>
       <TablesWrapper>
@@ -95,30 +140,21 @@ const Clinician: FC = () => {
           <Button>Apply</Button>
         </Row>
         <Card id="basic-table" $autoHeight title={t('Patients')} $padding="1.25rem 1.25rem 0">
-          <BasicTable
+          <Table
             columns={columns}
-            data={[
-              {
-                address: 'street 1 block A ,London',
-                age: 20,
-                name: 'usama',
-                email: 'textuser@gmail.com',
-                // tags: [{ priority: 1, value: 'low' },{ priority: 2, value: 'low' }],
-                key: 1,
-                clinicianRole: 'doctor',
+            dataSource={patients}
+            pagination={{
+              current: pageNo,
+              pageSize: 10,
+
+              onChange: (page:any) => {
+                fetch(page)
               },
-              {
-                address: 'street 1 block A ,London',
-                age: 20,
-                name: 'usama',
-                //   tags: [],
-                key: 2,
-                email: 'textuser@gmail.com',
-                clinicianRole: 'psychiatrist',
-              },
-            ]}
-            loading={false}
-            pagination={{ current: 1, pageSize: 10 }}
+              total: totalPages,
+            }}
+            loading={loading}
+            scroll={{ x: 800 }}
+            bordered
           />
         </Card>
       </TablesWrapper>

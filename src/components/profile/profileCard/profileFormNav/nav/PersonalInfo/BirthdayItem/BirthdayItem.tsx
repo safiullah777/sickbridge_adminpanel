@@ -3,12 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { BaseButtonsForm } from '@app/components/common/forms/BaseButtonsForm/BaseButtonsForm';
 import * as S from './BirthdayItem.styles';
 
-export const BirthdayItem: React.FC = () => {
+export const BirthdayItem: React.FC<{value?:any}> = ({value}) => {
   const { t } = useTranslation();
 
   return (
     <BaseButtonsForm.Item name="birthday" label={t('profile.nav.personalInfo.birthday')}>
-      <S.BirthdayPicker disabled={true} format="L" />
+      <S.BirthdayPicker value={value} disabled={true} format="L" />
     </BaseButtonsForm.Item>
   );
 };

@@ -12,26 +12,23 @@ import { useMounted } from '@app/hooks/useMounted';
 
 const initialPagination: Pagination = {
   current: 1,
-  pageSize: 5,
+  pageSize: 10,
 };
 
 export const BasicTable = ({
   data,
   pagination,
   loading,
-  columns
+  columns,
+  handleTableChange
 }: {
   data: any[];
   pagination: Pagination;
   loading: boolean;
   columns:ColumnsType<any>
-
+  handleTableChange?:()=>void
 }) => {
-  const [tableData, setTableData] = useState<{ data: BasicTableRow[]; pagination: Pagination; loading: boolean}>({
-    data: [],
-    pagination: initialPagination,
-    loading: false,
-  });
+  
   const { t } = useTranslation();
   const { isMounted } = useMounted();
   // {
@@ -66,23 +63,23 @@ export const BasicTable = ({
   //   fetch(initialPagination);
   // }, [fetch]);
 
-  const handleTableChange = (pagination: TablePaginationConfig) => {
-    // fetch(pagination);
-  };
+  // const handleTableChange = (pagination: TablePaginationConfig) => {
+  //   // fetch(pagination);
+  // };
 
-  const handleDeleteRow = (rowId: number) => {
-    setTableData({
-      ...tableData,
-      data: tableData.data.filter((item) => item.key !== rowId),
-      pagination: {
-        ...tableData.pagination,
-        total: tableData.pagination.total ? tableData.pagination.total - 1 : tableData.pagination.total,
-      },
-    });
-  };
+  // const handleDeleteRow = (rowId: number) => {
+  //   setTableData({
+  //     ...tableData,
+  //     data: tableData.data.filter((item) => item.key !== rowId),
+  //     pagination: {
+  //       ...tableData.pagination,
+  //       total: tableData.pagination.total ? tableData.pagination.total - 1 : tableData.pagination.total,
+  //     },
+  //   });
+  // };
 
   
-
+     
   return (
     <Table
       columns={columns}

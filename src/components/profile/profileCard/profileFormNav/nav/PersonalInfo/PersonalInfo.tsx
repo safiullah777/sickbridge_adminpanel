@@ -62,8 +62,8 @@ const initialPersonalInfoValues: PersonalInfoFormValues = {
   facebook: '',
 };
 
-export const PersonalInfo: React.FC = () => {
-  const user = useAppSelector((state) => state.user.user);
+export const PersonalInfo = ({ user }: { user?: any }) => {
+  // const user = useAppSelector((state) => state.user.user);
 
   const [isFieldsChanged, setFieldsChanged] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -74,8 +74,8 @@ export const PersonalInfo: React.FC = () => {
         ? {
             firstName: user.firstName,
             lastName: user.lastName,
-            email: user.email.name,
-            phone: user.phone.number,
+            email: user.email,
+            phone: user.phone_number,
             nickname: user.userName,
             sex: user.sex,
             birthday: Dates.getDate(user.birthday),
@@ -85,10 +85,6 @@ export const PersonalInfo: React.FC = () => {
             address1: user.address1,
             address2: user?.address2,
             zipcode: user.zipcode,
-            website: user?.website,
-            twitter: user?.socials?.twitter,
-            linkedin: user?.socials?.linkedin,
-            facebook: user?.socials?.facebook,
           }
         : initialPersonalInfoValues,
     [user],
@@ -132,25 +128,21 @@ export const PersonalInfo: React.FC = () => {
           </Col>
 
           <Col xs={24} md={12}>
-            <FirstNameItem  />
+            <FirstNameItem value={user.firstName}  />
           </Col>
 
           <Col xs={24} md={12}>
-            <LastNameItem />
+            <LastNameItem value={user.lastName} />
           </Col>
 
-         
           <Col xs={24} md={12}>
             <SexItem />
           </Col>
 
           <Col xs={24} md={12}>
-            <BirthdayItem />
+            <BirthdayItem value={user.birthday}  />
           </Col>
 
-          <Col xs={24} md={12}>
-            <LanguageItem />
-          </Col>
 
           <Col span={24}>
             <BaseButtonsForm.Item>
@@ -159,11 +151,11 @@ export const PersonalInfo: React.FC = () => {
           </Col>
 
           <Col xs={24} md={12}>
-            <PhoneItem verified={user?.phone.verified} />
+            <PhoneItem verified={user?.phone} />
           </Col>
 
           <Col xs={24} md={12}>
-            <EmailItem verified={user?.email.verified} />
+            <EmailItem verified={user?.email} />
           </Col>
 
           <Col span={24}>
@@ -177,21 +169,8 @@ export const PersonalInfo: React.FC = () => {
           </Col>
 
           <Col xs={24} md={12}>
-            <CitiesItem />
-          </Col>
-
-          <Col xs={24} md={12}>
-            <AddressItem number={1} />
-          </Col>
-
-          
-
-          <Col xs={24} md={12}>
             <ZipcodeItem />
           </Col>
-
-         
-         
         </Row>
       </BaseButtonsForm>
     </Card>
