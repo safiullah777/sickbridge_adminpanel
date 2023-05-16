@@ -6,19 +6,44 @@ export const getAllUsers = async ({
   subRole,
   page,
   limit,
+  status,
+  keyword = '',
 }: {
   role: string;
   subRole: string;
   page: number;
   limit: number;
+  status: string;
+  keyword?: string;
 }) => {
   try {
     const res = await axios.get(
-      `http://localhost:4000/api/user/getAllUsers?role=${role}&subRole=${subRole}&page=${page}&limit=${limit}`,
+      `${process.env.REACT_APP_API_URL}/api/user/getAllUsers?role=${role}&subRole=${subRole}&page=${page}&limit=${limit}&status=${status}&keyword=${keyword}`,
     );
+    return res.data || [];
+  } catch (err) {
+    console.log({ err });
+  }
+};
+export const getCommission = async ({}) => {
+  try {
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/payment`);
     return res.data;
   } catch (err) {
     console.log({ err });
+    return err;
+  }
+};
+
+export const setCommissionApi = async ({ clinician, num }: { clinician: boolean; num: number }) => {
+  try {
+    const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/payment/create`, {
+      [!clinician ? 'patientFee' : 'appCommission']: num,
+    });
+    return res.data;
+  } catch (err) {
+    console.log({ err });
+    return err;
   }
 };
 
@@ -67,8 +92,8 @@ export const contentManagement = async ({
   formData.append('footerBottomText', footerBottomText);
   formData.append('facebookLink', facebookLink);
   try {
-    const res = await axios.post(`http://localhost:4000/api/content/create`, formData);
-    return res
+    const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/content/create`, formData);
+    return res;
   } catch (err) {
     console.log({ err });
   }
