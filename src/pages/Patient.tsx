@@ -27,17 +27,16 @@ const Patient: FC = () => {
   const [Commission, setCommission] = useState(0);
   const [searchData, setSearchData] = useState({
     keyword: '',
-    role: '',
     status: 'active',
   });
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       const com = await getCommission({});
-      setCommission(com.data.patientFee || 0);
+      setCommission(com?.data?.patientFee || 0);
       const res = await getAllUsers({ limit: 10, page: pageNo, role: 'patient', subRole: '', status: 'active' });
       console.log({ res });
-      setTotalPages(res.metaData?.numOfPages);
+      setTotalPages(res?.metaData?.numOfPages || 0);
       setPatients(
         res?.data.map((item: any) => ({ ...item, name: `${item.first_name} ${item.last_name}`, actions: item })),
       );
@@ -57,7 +56,7 @@ const Patient: FC = () => {
           setPatients(
             res?.data.map((item: any) => ({ ...item, name: `${item.first_name} ${item.last_name}`, actions: item })),
           );
-      setTotalPages(res.metaData?.numOfPages);
+      setTotalPages(res?.metaData?.numOfPages || 0);
         setLoading(false);
       }
       // });
@@ -102,7 +101,27 @@ const Patient: FC = () => {
   ];
   const [isBasicModalOpen, setIsBasicModalOpen] = useState<boolean>(false);
   const [modalInfo, setModalInfo] = useState<any>({});
-
+  const onSearch = async () => {
+    setLoading(true);
+    setPageNo(1);
+    console.log({ searchData });
+    const res = await getAllUsers({
+      limit: 10,
+      page: pageNo,
+      role: 'patient',
+      subRole: '',
+      status: searchData.status,
+      keyword: searchData.keyword,
+    });
+    console.log({ res });
+    res?.data
+      ? setPatients(
+          res?.data.map((item: any) => ({ ...item, name: `${item.first_name} ${item.last_name}`, actions: item })),
+        )
+      : setPatients([]);
+    setTotalPages(res?.metaData?.numOfPages || 0);
+    setLoading(false);
+  };
   return (
     <div>
       <Modal
@@ -170,13 +189,16 @@ const Patient: FC = () => {
           </div>
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             <span className="ant-collapse-header-text">Status:</span>
-            <Select defaultValue="" width={160} allowClear>
+            <Select defaultValue="active" 
+              onChange={(e) => setSearchData((prev) => ({ ...prev, status: '' + e }))}
+            
+            width={160} allowClear>
               <Option value="active">Active</Option>
               <Option value="block">Block</Option>
               <Option value="unapproaved">Unapproaved</Option>
             </Select>
           </div>
-          <Button>Apply</Button>
+          <Button onClick={onSearch}>Apply</Button>
         </Row>
         <Card id="basic-table" $autoHeight title={t('Patients')} $padding="1.25rem 1.25rem 0">
           <Table

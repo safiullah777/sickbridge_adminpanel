@@ -81,7 +81,7 @@ const Clinician: FC = () => {
       setLoading(true);
       const com = await getCommission({});
       console.log({ com });
-      setCommission(com.data.appCommission || 0);
+      setCommission(com?.data?.appCommission || 0);
       const res = await getAllUsers({
         limit: 10,
         page: pageNo,
@@ -91,7 +91,7 @@ const Clinician: FC = () => {
         keyword: searchData.keyword,
       });
       console.log({ res });
-      setTotalPages(res.metaData?.numOfPages);
+      setTotalPages(res?.metaData?.numOfPages || 0);
       res?.data
         ? setPatients(
             res?.data.map((item: any) => ({ ...item, name: `${item?.first_name} ${item?.last_name}`, actions: item })),
@@ -121,7 +121,7 @@ const Clinician: FC = () => {
               res?.data.map((item: any) => ({ ...item, name: `${item.first_name} ${item.last_name}`, actions: item })),
             )
           : setPatients([]);
-        setTotalPages(res.metaData?.numOfPages);
+        setTotalPages(res?.metaData?.numOfPages || 0);
         setLoading(false);
       }
       // });
@@ -146,7 +146,7 @@ const Clinician: FC = () => {
           res?.data.map((item: any) => ({ ...item, name: `${item.first_name} ${item.last_name}`, actions: item })),
         )
       : setPatients([]);
-    setTotalPages(res.metaData?.numOfPages);
+    setTotalPages(res?.metaData?.numOfPages || 0);
     setLoading(false);
   };
   return (

@@ -35,6 +35,16 @@ export const getCommission = async ({}) => {
   }
 };
 
+export const getStats = async ({}) => {
+  try {
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/user/stats`);
+    return res.data;
+  } catch (err) {
+    console.log({ err });
+    return err;
+  }
+};
+
 export const setCommissionApi = async ({ clinician, num }: { clinician: boolean; num: number }) => {
   try {
     const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/payment/create`, {

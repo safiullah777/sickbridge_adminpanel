@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Col, Row, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { PageTitle } from '@app/components/common/PageTitle/PageTitle';
@@ -16,10 +16,31 @@ import { NewsCard } from '@app/components/medical-dashboard/NewsCard/NewsCard';
 import { References } from '@app/components/common/References/References';
 import { useResponsive } from '@app/hooks/useResponsive';
 import * as S from './DashboardPages/DashboardPage.styles';
+import { getStats } from '@app/api/user';
 
 const Dashboard: React.FC = () => {
   const { isTablet, isDesktop } = useResponsive();
-
+  const [data, setData] = useState({
+    all_users: 0,
+    doctors: 0,
+    paid_transac: 0,
+    patients: 0,
+    pend_transac: 0,
+    psychiatrists: 0,
+    psychologists: 0,
+    relCounsellors: 0,
+    transactions: 0,
+  });
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getStats({});
+      if (res.result == 'success') {
+        setData({ ...res.data });
+      }
+      console.log({ res });
+    };
+    fetchData();
+  }, []);
   const { t } = useTranslation();
   const flexCenter = { display: 'flex', flexDirection: 'column', justifyContent: 'center' };
   const desktopLayout = (
@@ -29,29 +50,83 @@ const Dashboard: React.FC = () => {
 
         <Row gutter={[30, 30]}>
           <Row gutter={[30, 30]} className="cards" style={{ padding: '0 3rem', gap: '1rem' }}>
-            <Card hoverable style={{ width: 300, display: 'flex', flexDirection: 'column', justifyContent: 'center',backgroundColor:'#36cfc9' }}>
+            <Card
+              hoverable
+              style={{
+                width: 300,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                backgroundColor: '#36cfc9',
+              }}
+            >
               <Typography.Text>All</Typography.Text>
-              <Typography.Text style={{ fontSize: 30 }}>340</Typography.Text>
+              <Typography.Text style={{ fontSize: 30 }}>{data.all_users}</Typography.Text>
             </Card>
-            <Card hoverable style={{ width: 300, display: 'flex', flexDirection: 'column', justifyContent: 'center',backgroundColor:'#f5222d' }}>
+            <Card
+              hoverable
+              style={{
+                width: 300,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                backgroundColor: '#f5222d',
+              }}
+            >
               <Typography.Text>Patients</Typography.Text>
-              <Typography.Text style={{ fontSize: 30 }}>200</Typography.Text>
+              <Typography.Text style={{ fontSize: 30 }}>{data.patients}</Typography.Text>
             </Card>
-            <Card hoverable style={{ width: 300, display: 'flex', flexDirection: 'column', justifyContent: 'center',backgroundColor:'#ffbb96' }}>
+            <Card
+              hoverable
+              style={{
+                width: 300,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                backgroundColor: '#ffbb96',
+              }}
+            >
               <Typography.Text>Doctors</Typography.Text>
-              <Typography.Text style={{ fontSize: 30 }}>79</Typography.Text>
+              <Typography.Text style={{ fontSize: 30 }}>{data.doctors}</Typography.Text>
             </Card>
-            <Card hoverable style={{ width: 300, display: 'flex', flexDirection: 'column', justifyContent: 'center',backgroundColor:'#b37feb' }}>
+            <Card
+              hoverable
+              style={{
+                width: 300,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                backgroundColor: '#b37feb',
+              }}
+            >
               <Typography.Text>Psychiatrists</Typography.Text>
-              <Typography.Text style={{ fontSize: 30 }}>30</Typography.Text>
+              <Typography.Text style={{ fontSize: 30 }}>{data.psychiatrists}</Typography.Text>
             </Card>
-            <Card hoverable style={{ width: 300, display: 'flex', flexDirection: 'column', justifyContent: 'center',backgroundColor:'#722ed1' }}>
+            <Card
+              hoverable
+              style={{
+                width: 300,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                backgroundColor: '#722ed1',
+              }}
+            >
               <Typography.Text>Psychologist</Typography.Text>
-              <Typography.Text style={{ fontSize: 30 }}>20</Typography.Text>
+              <Typography.Text style={{ fontSize: 30 }}>{data?.psychologists}</Typography.Text>
             </Card>
-            <Card hoverable style={{ width: 300, display: 'flex', flexDirection: 'column', justifyContent: 'center',backgroundColor:'#52c41a' }}>
+            <Card
+              hoverable
+              style={{
+                width: 300,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                backgroundColor: '#52c41a',
+              }}
+            >
               <Typography.Text>Relationship Counsellor</Typography.Text>
-              <Typography.Text style={{ fontSize: 30 }}>11</Typography.Text>
+              <Typography.Text style={{ fontSize: 30 }}>{data.relCounsellors}</Typography.Text>
             </Card>
           </Row>
           <Col>
@@ -60,24 +135,42 @@ const Dashboard: React.FC = () => {
             <Row gutter={[30, 30]} className="cards" style={{ padding: '0 3rem', gap: '1rem' }}>
               <Card
                 hoverable
-                style={{ width: 300, display: 'flex', flexDirection: 'column', justifyContent: 'center',backgroundColor:'#1890ff' }}
+                style={{
+                  width: 300,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  backgroundColor: '#1890ff',
+                }}
               >
                 <Typography.Text>All</Typography.Text>
-                <Typography.Text style={{ fontSize: 30 }}>200</Typography.Text>
+                <Typography.Text style={{ fontSize: 30 }}>{data.paid_transac+data.pend_transac}</Typography.Text>
               </Card>
               <Card
                 hoverable
-                style={{ width: 300, display: 'flex', flexDirection: 'column', justifyContent: 'center',backgroundColor:'#fa8c16' }}
+                style={{
+                  width: 300,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  backgroundColor: '#fa8c16',
+                }}
               >
                 <Typography.Text>Pending</Typography.Text>
-                <Typography.Text style={{ fontSize: 30 }}>80</Typography.Text>
+                <Typography.Text style={{ fontSize: 30 }}>{data.pend_transac}</Typography.Text>
               </Card>
               <Card
                 hoverable
-                style={{ width: 300, display: 'flex', flexDirection: 'column', justifyContent: 'center',backgroundColor:'#8c8c8c' }}
+                style={{
+                  width: 300,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  backgroundColor: '#8c8c8c',
+                }}
               >
                 <Typography.Text>Approaved</Typography.Text>
-                <Typography.Text style={{ fontSize: 30 }}>100</Typography.Text>
+                <Typography.Text style={{ fontSize: 30 }}>{data.paid_transac}</Typography.Text>
               </Card>
             </Row>
           </Col>
