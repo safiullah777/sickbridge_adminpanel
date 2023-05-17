@@ -11,11 +11,12 @@ import { useTranslation } from 'react-i18next';
 // import * as S from './';
 import { Select, Option } from '@app/components/common/selects/Select/Select';
 import { Input } from '@app/components/common/inputs/Input/Input';
-import { getAllUsers, getCommission, setCommissionApi } from '@app/api/user';
+import { changeStatus, getAllUsers, getCommission, setCommissionApi } from '@app/api/user';
 import { useMounted } from '@app/hooks/useMounted';
 import { Table } from '@app/components/common/Table/Table';
 import { PersonalInfo } from '@app/components/profile/profileCard/profileFormNav/nav/PersonalInfo/PersonalInfo';
 import Title from 'antd/lib/skeleton/Title';
+import TextArea from 'antd/lib/input/TextArea';
 
 const Patient: FC = () => {
   const { t } = useTranslation();
@@ -25,6 +26,11 @@ const Patient: FC = () => {
   const [pageNo, setPageNo] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [Commission, setCommission] = useState(0);
+  const [block, setBlock] = useState({
+    show: false,
+    reason: '',
+    loading: false,
+  });
   const [searchData, setSearchData] = useState({
     keyword: '',
     status: 'active',
@@ -56,7 +62,7 @@ const Patient: FC = () => {
           setPatients(
             res?.data.map((item: any) => ({ ...item, name: `${item.first_name} ${item.last_name}`, actions: item })),
           );
-      setTotalPages(res?.metaData?.numOfPages || 0);
+        setTotalPages(res?.metaData?.numOfPages || 0);
         setLoading(false);
       }
       // });
@@ -122,6 +128,20 @@ const Patient: FC = () => {
     setTotalPages(res?.metaData?.numOfPages || 0);
     setLoading(false);
   };
+  const changesUserStatus = async (status: string) => {
+    setBlock((prev) => ({ ...prev, loading: true }));
+    const res = await changeStatus({ reason: block.reason, status, userId: modalInfo._id });
+    setBlock((prev) => ({ ...prev, loading: false }));
+    let temp: any;
+    temp = patients.map((item: any) => {
+      return item?._id == modalInfo._id ? { ...item, status: status == 'block' ? 'block' : 'active' } : item;
+    });
+    // setPatients(temp);
+    setPatients(temp.filter((item: any) => item?.status == searchData.status));
+    setBlock({ ...block, show: false });
+    setIsBasicModalOpen(false);
+    console.log({ res });
+  };
   return (
     <div>
       <Modal
@@ -130,7 +150,45 @@ const Patient: FC = () => {
         onCancel={() => setIsBasicModalOpen(false)}
       >
         <div className="" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <Avatar src={modalInfo?.clientImg} style={{ width: 100, height: 100 }} />
+          <div className="" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+            <Avatar src={modalInfo?.clientImg} style={{ width: 100, height: 100 }} />
+            <div className="" style={{ display: 'flex', gap: 20 }}>
+              <Button
+                onClick={() => setBlock((prev) => ({ ...prev, show: !prev.show }))}
+                danger
+                disabled={modalInfo.status == 'block'}
+                loading={block.loading}
+              >
+                Block
+              </Button>
+              <Button
+                onClick={() => changesUserStatus('active')}
+                disabled={modalInfo.status == 'active'}
+                loading={block.loading}
+              >
+                Unblock
+              </Button>
+            </div>
+          </div>
+          {block.show && (
+            <>
+              <TextArea
+                value={block.reason}
+                onChange={(e) => setBlock((prev) => ({ ...prev, reason: e.target.value }))}
+                rows={4}
+                placeholder="tell your reason to block this user."
+              />
+              <Button
+                type="primary"
+                shape="round"
+                block
+                onClick={() => changesUserStatus('block')}
+                loading={block.loading}
+              >
+                Submit
+              </Button>
+            </>
+          )}
           <div className="" style={{ display: 'flex', gap: 10 }}>
             <span style={{ fontWeight: 'bold' }}>First Name :</span>
             <span style={{ color: 'gray' }}>{modalInfo?.first_name}</span>
@@ -180,7 +238,7 @@ const Patient: FC = () => {
       <PageTitle>{t('Patients')}</PageTitle>
       <TablesWrapper>
         <Row style={{ marginBottom: '10px', justifyContent: 'flex-end', alignItems: 'flex-end', gap: '10px' }}>
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             <Input
               value={searchData.keyword}
               placeholder="search by name or email"
@@ -189,10 +247,12 @@ const Patient: FC = () => {
           </div>
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             <span className="ant-collapse-header-text">Status:</span>
-            <Select defaultValue="active" 
+            <Select
+              defaultValue="active"
               onChange={(e) => setSearchData((prev) => ({ ...prev, status: '' + e }))}
-            
-            width={160} allowClear>
+              width={160}
+              allowClear
+            >
               <Option value="active">Active</Option>
               <Option value="block">Block</Option>
               <Option value="unapproaved">Unapproaved</Option>

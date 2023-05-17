@@ -25,12 +25,43 @@ export const getAllUsers = async ({
     console.log({ err });
   }
 };
+
+export const getAllTransactions = async ({}) => {
+  try {
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/checkouts/all?limit=1`);
+    return res.data;
+  } catch (err) {
+    console.log({ err });
+    return err;
+  }
+};
+
 export const getCommission = async ({}) => {
   try {
     const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/payment`);
     return res.data;
   } catch (err) {
     console.log({ err });
+    return err;
+  }
+};
+export const changeStatus = async ({
+  status,
+  userId,
+  reason = '',
+}: {
+  status: string;
+  userId: string;
+  reason: string;
+}) => {
+  try {
+    const res = await axios.get(
+      `${process.env.REACT_APP_API_URL}/api/user/status?status=${status}&userId=${userId}${
+        reason.length ? `&reason=${reason}` : ''
+      }`,
+    );
+    return res.data;
+  } catch (err) {
     return err;
   }
 };

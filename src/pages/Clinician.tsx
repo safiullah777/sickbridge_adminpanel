@@ -15,8 +15,9 @@ import { PersonalInfo } from '@app/components/profile/profileCard/profileFormNav
 // import * as S from './';
 import { Input } from '@app/components/common/inputs/Input/Input';
 import { useMounted } from '@app/hooks/useMounted';
-import { getAllUsers, getCommission, setCommissionApi } from '@app/api/user';
+import { changeStatus, getAllUsers, getCommission, setCommissionApi } from '@app/api/user';
 import { Table } from '@app/components/common/Table/Table';
+import TextArea from 'antd/lib/input/TextArea';
 
 const Clinician: FC = () => {
   const { t } = useTranslation();
@@ -76,6 +77,12 @@ const Clinician: FC = () => {
   const [pageNo, setPageNo] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [Commission, setCommission] = useState(0);
+  const [limit,setLimit]=useState(115)
+  const [block, setBlock] = useState({
+    show: false,
+    reason: '',
+    loading: false,
+  });
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -83,7 +90,7 @@ const Clinician: FC = () => {
       console.log({ com });
       setCommission(com?.data?.appCommission || 0);
       const res = await getAllUsers({
-        limit: 10,
+        limit: limit,
         page: pageNo,
         role: 'clinician',
         subRole: searchData.role.length ? searchData.role : '',
@@ -91,13 +98,14 @@ const Clinician: FC = () => {
         keyword: searchData.keyword,
       });
       console.log({ res });
-      setTotalPages(res?.metaData?.numOfPages || 0);
+      setTotalPages(res?.metaData?.numOfPages);
       res?.data
         ? setPatients(
             res?.data.map((item: any) => ({ ...item, name: `${item?.first_name} ${item?.last_name}`, actions: item })),
           )
         : setPatients([]);
       setLoading(false);
+      console.log(res?.metaData?.numOfPages)
     };
     fetchData();
   }, []);
@@ -108,7 +116,7 @@ const Clinician: FC = () => {
 
       // getBasicTableData(pagination).then((res) => {
       const res = await getAllUsers({
-        limit: 10,
+        limit,
         page: a,
         role: 'clinician',
         subRole: searchData.role.length ? searchData.role : '',
@@ -121,7 +129,7 @@ const Clinician: FC = () => {
               res?.data.map((item: any) => ({ ...item, name: `${item.first_name} ${item.last_name}`, actions: item })),
             )
           : setPatients([]);
-        setTotalPages(res?.metaData?.numOfPages || 0);
+        setTotalPages(res?.metaData?.numOfPages);
         setLoading(false);
       }
       // });
@@ -133,7 +141,7 @@ const Clinician: FC = () => {
     setPageNo(1);
     console.log({ searchData });
     const res = await getAllUsers({
-      limit: 10,
+      limit,
       page: pageNo,
       role: 'clinician',
       subRole: searchData.role.length ? searchData.role : '',
@@ -146,8 +154,22 @@ const Clinician: FC = () => {
           res?.data.map((item: any) => ({ ...item, name: `${item.first_name} ${item.last_name}`, actions: item })),
         )
       : setPatients([]);
-    setTotalPages(res?.metaData?.numOfPages || 0);
+    setTotalPages(res?.metaData?.numOfPages);
     setLoading(false);
+  };
+  const changesUserStatus = async (status: string) => {
+    setBlock((prev) => ({ ...prev, loading: true }));
+    const res = await changeStatus({ reason: block.reason, status, userId: modalInfo._id });
+    setBlock((prev) => ({ ...prev, loading: false }));
+    let temp: any;
+    temp = patients.map((item: any) => {
+      return item?._id == modalInfo._id ? { ...item, status: status == 'block' ? 'block' : 'active' } : item;
+    });
+    // setPatients(temp);
+    setPatients(temp.filter((item: any) => item?.status == searchData.status));
+    setBlock({ ...block, show: false });
+    setIsBasicModalOpen(false);
+    console.log({ res });
   };
   return (
     <div>
@@ -158,7 +180,45 @@ const Clinician: FC = () => {
       >
         {/* <PersonalInfo user={modalInfo} /> */}
         <div className="" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <Avatar src={modalInfo?.clientImg} style={{ width: 100, height: 100 }} />
+          <div className="" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+            <Avatar src={modalInfo?.clientImg} style={{ width: 100, height: 100 }} />
+            <div className="" style={{ display: 'flex', gap: 20 }}>
+              <Button
+                onClick={() => setBlock((prev) => ({ ...prev, show: !prev.show }))}
+                danger
+                disabled={modalInfo.status == 'block'}
+                loading={block.loading}
+              >
+                Block
+              </Button>
+              <Button
+                onClick={() => changesUserStatus('active')}
+                disabled={modalInfo.status == 'active'}
+                loading={block.loading}
+              >
+                Unblock
+              </Button>
+            </div>
+          </div>
+          {block.show && (
+            <>
+              <TextArea
+                value={block.reason}
+                onChange={(e) => setBlock((prev) => ({ ...prev, reason: e.target.value }))}
+                rows={4}
+                placeholder="tell your reason to block this user."
+              />
+              <Button
+                type="primary"
+                shape="round"
+                block
+                onClick={() => changesUserStatus('block')}
+                loading={block.loading}
+              >
+                Submit
+              </Button>
+            </>
+          )}
           <div className="" style={{ display: 'flex', gap: 10 }}>
             <span style={{ fontWeight: 'bold' }}>First Name :</span>
             <span style={{ color: 'gray' }}>{modalInfo?.first_name}</span>
@@ -250,12 +310,13 @@ const Clinician: FC = () => {
           <Button onClick={onSearch}>Apply</Button>
         </Row>
         <Card id="basic-table" $autoHeight title={t('Patients')} $padding="1.25rem 1.25rem 0">
+          {console.log({ pageNo })}
           <Table
             columns={columns}
             dataSource={patients}
             pagination={{
               current: pageNo,
-              pageSize: 10,
+              pageSize: limit,
               onChange: (page: any) => {
                 fetch(page);
               },
