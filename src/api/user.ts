@@ -26,9 +26,9 @@ export const getAllUsers = async ({
   }
 };
 
-export const getAllTransactions = async ({}) => {
+export const getAllTransactions = async ({ pageNo, status }: { pageNo: number; status: string }) => {
   try {
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/checkouts/all?limit=1`);
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/checkouts/all?limit=10&page=${pageNo}`);
     return res.data;
   } catch (err) {
     console.log({ err });

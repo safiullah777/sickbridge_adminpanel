@@ -77,7 +77,7 @@ const Clinician: FC = () => {
   const [pageNo, setPageNo] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [Commission, setCommission] = useState(0);
-  const [limit,setLimit]=useState(115)
+  const [limit,setLimit]=useState(10)
   const [block, setBlock] = useState({
     show: false,
     reason: '',
@@ -320,11 +320,10 @@ const Clinician: FC = () => {
               onChange: (page: any) => {
                 fetch(page);
               },
-              total: totalPages,
+              total: totalPages*limit,
             }}
             loading={loading}
-            scroll={{ x: 800 }}
-            bordered
+            
           />
         </Card>
       </TablesWrapper>

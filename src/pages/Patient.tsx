@@ -272,7 +272,7 @@ const Patient: FC = () => {
               onChange: (page) => {
                 fetch(page);
               },
-              total: totalPages,
+              total: totalPages * 10,
             }}
             loading={loading}
             scroll={{ x: 800 }}

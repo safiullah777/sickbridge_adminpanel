@@ -28,6 +28,10 @@ const Transaction: FC = () => {
       dataIndex: 'createdAt',
     },
     {
+      title: t('Transaction Id'),
+      dataIndex: '_id',
+    },
+    {
       title: t('From'),
       dataIndex: 'fromName',
     },
@@ -76,21 +80,21 @@ const Transaction: FC = () => {
       setLoading(true);
       setPageNo(a);
       // getBasicTableData(pagination).then((res) => {
-      const res = await getAllTransactions({ });
+      const res = await getAllTransactions({ pageNo: a });
       if (isMounted.current) {
         res?.data
-        ? setTrans(
-            res?.data.map((item: any) => ({
-              ...item,
-              fromName: item?.checkoutBy.first_name + ' ' + item?.checkoutBy.last_name,
-              fromEmail: item?.checkoutBy.email,
-              toName: item?.checkoutTo.first_name + ' ' + item?.checkoutTo.last_name,
-              toEmail: item?.checkoutTo.email,
-              amount: item.amounts.consultationTotalFee,
-              createdAt: new Date(item?.createdAt).toLocaleDateString(),
-            })),
-          )
-        : setTrans([]);
+          ? setTrans(
+              res?.data.map((item: any, index: number) => ({
+                ...item,
+                fromName: item?.checkoutBy.first_name + ' ' + item?.checkoutBy.last_name,
+                fromEmail: item?.checkoutBy.email,
+                toName: item?.checkoutTo.first_name + ' ' + item?.checkoutTo.last_name,
+                toEmail: item?.checkoutTo.email,
+                amount: item.amounts.consultationTotalFee,
+                createdAt: new Date(item?.createdAt).toLocaleDateString(),
+              })),
+            )
+          : setTrans([]);
         setTotalPages(res?.metaData?.numOfPages || 0);
         setLoading(false);
       }
@@ -101,10 +105,10 @@ const Transaction: FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const res = await getAllTransactions({});
+      const res = await getAllTransactions({ pageNo });
       res?.data
         ? setTrans(
-            res?.data.map((item: any) => ({
+            res?.data.map((item: any, index: number) => ({
               ...item,
               fromName: item?.checkoutBy.first_name + ' ' + item?.checkoutBy.last_name,
               fromEmail: item?.checkoutBy.email,
@@ -150,8 +154,8 @@ const Transaction: FC = () => {
             <span className="ant-collapse-header-text">Status:</span>
             <Select defaultValue="All" width={160} allowClear>
               <Option value="All">{'All'}</Option>
-              <Option value="active">Pending</Option>
-              <Option value="block">Approaved</Option>
+              <Option value="pending">Pending</Option>
+              <Option value="paid">Paid</Option>
               {/* <Option value="unapproaved">Unapproaved</Option> */}
             </Select>
           </div>
@@ -159,16 +163,21 @@ const Transaction: FC = () => {
           <Button>Apply</Button>
         </Row>
         <Card id="basic-table" $autoHeight title={t('Transaction History')} $padding="1.25rem 1.25rem 0">
-          <Table columns={columns} dataSource={trans} loading={false} pagination={{
+          {console.log({ totalPages })}
+          <Table
+            columns={columns}
+            dataSource={trans}
+            loading={loading}
+            pagination={{
               current: pageNo,
-              pageSize: 1,
-
+              pageSize: 10,
               // onChange: (page) => setPageNo(page),
               onChange: (page) => {
-                fetch(page)
+                fetch(page);
               },
-              total: totalPages,
-            }} />
+              total: totalPages * 10,
+            }}
+          />
         </Card>
       </TablesWrapper>
     </div>
