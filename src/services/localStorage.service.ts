@@ -35,7 +35,10 @@ export const persistToken = (token: string): void => {
 };
 
 export const readToken = (): string => {
-  return localStorage.getItem('accessToken') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhcWliQG1haWwuY29tIiwiaWF0IjoxNjc2MzE0NTA2LCJleHAiOjE2NzY0ODczMDZ9.ruUzn_QTDni6cabYHnkLxZPqyT5j8sUpVVNzh0gCFKI';
+  return (
+    localStorage.getItem('accessToken') ||
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhcWliQG1haWwuY29tIiwiaWF0IjoxNjc2MzE0NTA2LCJleHAiOjE2NzY0ODczMDZ9.ruUzn_QTDni6cabYHnkLxZPqyT5j8sUpVVNzh0gCFKI'
+  );
 };
 
 export const persistUser = (user: UserModel): void => {

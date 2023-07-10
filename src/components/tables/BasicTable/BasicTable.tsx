@@ -20,15 +20,14 @@ export const BasicTable = ({
   pagination,
   loading,
   columns,
-  handleTableChange
+  handleTableChange,
 }: {
   data: any[];
   pagination: Pagination;
   loading: boolean;
-  columns:ColumnsType<any>
-  handleTableChange?:()=>void
+  columns: ColumnsType<any>;
+  handleTableChange?: () => void;
 }) => {
-  
   const { t } = useTranslation();
   const { isMounted } = useMounted();
   // {
@@ -78,8 +77,6 @@ export const BasicTable = ({
   //   });
   // };
 
-  
-     
   return (
     <Table
       columns={columns}

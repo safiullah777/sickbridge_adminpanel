@@ -142,8 +142,8 @@ export const AppRouter: React.FC = () => {
             <Route path="patient" element={<Patient />} />
             <Route path="clinician" element={<Clinician />} />
           </Route>
-          <Route path='content-management' element={<ContentManagement />} />
-          <Route path='transactions' element={<Transaction />} />
+          <Route path="content-management" element={<ContentManagement />} />
+          <Route path="transactions" element={<Transaction />} />
           <Route path="apps">
             <Route path="feed" element={<NewsFeed />} />
             <Route path="kanban" element={<Kanban />} />

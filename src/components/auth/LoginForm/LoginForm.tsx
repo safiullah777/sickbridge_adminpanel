@@ -93,7 +93,6 @@ export const LoginForm: React.FC = () => {
             {t('login.facebookLink')}
           </Auth.SocialButton>
         </BaseForm.Item> */}
-       
       </BaseForm>
     </Auth.FormWrapper>
   );
