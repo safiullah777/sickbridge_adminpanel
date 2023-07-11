@@ -13,6 +13,8 @@ import {
 } from '@app/api/auth.api';
 import { setUser } from '@app/store/slices/userSlice';
 import { deleteToken, deleteUser, persistToken, readToken } from '@app/services/localStorage.service';
+import { loginApi } from '@app/api/user';
+import { notificationController } from '@app/controllers/notificationController';
 
 export interface AuthSlice {
   token: string | null;
@@ -23,12 +25,17 @@ const initialState: AuthSlice = {
 };
 
 export const doLogin = createAsyncThunk('auth/doLogin', async (loginPayload: LoginRequest, { dispatch }) =>
-  login(loginPayload).then((res) => {
-    dispatch(setUser(res.user));
-    persistToken(res.token);
-
-    return res.token;
-  }),
+  loginApi(loginPayload)
+    .then((res) => {
+      console.log({ res });
+      if (res?.code == 200 && res?.user?.role == 'admin') {
+        dispatch(setUser(res.user));
+        persistToken(res.token);
+        return res.token;
+      }
+      notificationController.error({ message: 'Invalid Credentials' });
+    })
+    .catch(() => {}),
 );
 
 export const doSignUp = createAsyncThunk('auth/doSignUp', async (signUpPayload: SignUpRequest) =>

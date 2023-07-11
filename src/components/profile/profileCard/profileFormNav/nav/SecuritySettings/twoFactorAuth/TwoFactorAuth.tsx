@@ -20,7 +20,7 @@ export interface CurrentOption {
 export type TwoFactorAuthOptionState = TwoFactorAuthOption | null;
 
 export const TwoFactorAuth: React.FC = () => {
-  const user = useAppSelector((state) => state.user.user);
+  const user = useAppSelector((state) => state.user?.user);
 
   const isNeedToShowVerifyBtn = useMemo(
     () => (user?.email.name && !user?.email.verified) || (user?.phone.number && !user?.phone.verified),

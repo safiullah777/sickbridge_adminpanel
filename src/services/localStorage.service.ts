@@ -3,8 +3,8 @@ const avatarImg = process.env.REACT_APP_ASSETS_BUCKET + '/avatars/avatar5.webp';
 
 const testUser = {
   id: 1,
-  firstName: 'Chris',
-  lastName: 'Johnson',
+  first_name: 'Chris',
+  last_name: 'Johnson',
   imgUrl: avatarImg,
   userName: '@john1989',
   email: {

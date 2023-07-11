@@ -239,9 +239,9 @@ const Dashboard: React.FC = () => {
         </Col>
       </>
 
-      <Col id="health" xs={24} md={24} order={(isTablet && 9) || 0}>
+      {/* <Col id="health" xs={24} md={24} order={(isTablet && 9) || 0}>
         <HealthCard />
-      </Col>
+      </Col> */}
 
       {/* <Col id="favorite-doctors" xs={24} md={24} order={(isTablet && 13) || 0}>
         <FavoritesDoctorsCard />

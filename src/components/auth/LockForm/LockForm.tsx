@@ -28,8 +28,8 @@ export const LockForm: React.FC = () => {
 
   const [isLoading, setLoading] = useState(false);
   const [dateState, setDateState] = useState(new Date());
-  const user = useAppSelector((state) => state.user.user);
-  const fullName = `${user?.firstName} ${user?.lastName}`;
+  const user = useAppSelector((state) => state.user?.user);
+  const fullName = `${user?.first_name} ${user?.last_name}`;
 
   const currentDateInUTC = dateState.toUTCString();
   const currentTime = Dates.format(currentDateInUTC, 'h:mm A');

@@ -91,7 +91,7 @@ export const ControlForm: React.FC = () => {
                   <S.ListItem key={index}>
                     <Avatar icon={<UserOutlined />} />
                     <S.User>
-                      {user.name} - {user.age}
+                      {user?.name} - {user?.age}
                     </S.User>
                   </S.ListItem>
                 ))}

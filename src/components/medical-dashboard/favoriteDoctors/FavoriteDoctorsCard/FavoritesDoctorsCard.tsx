@@ -26,7 +26,7 @@ export const FavoritesDoctorsCard: React.FC = () => {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [calendar, setCalendar] = useState<CalendarEvent[]>([]);
 
-  const user = useAppSelector((state) => state.user.user);
+  const user = useAppSelector((state) => state.user?.user);
 
   const today = Dates.getToday();
 
@@ -35,7 +35,7 @@ export const FavoritesDoctorsCard: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    user && getUserCalendar(user.id).then((res) => setCalendar(res));
+    user && getUserCalendar(user?.id).then((res) => setCalendar(res));
   }, [user]);
 
   const pastEvents = useMemo(
