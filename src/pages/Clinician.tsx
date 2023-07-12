@@ -205,7 +205,7 @@ const Clinician: FC = () => {
                 value={block.reason}
                 onChange={(e) => setBlock((prev) => ({ ...prev, reason: e.target.value }))}
                 rows={4}
-                placeholder="tell your reason to block this user."
+                placeholder="tell your reason to block this user?."
               />
               <Button
                 type="primary"

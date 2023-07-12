@@ -148,7 +148,7 @@ export const AppRouter: React.FC = () => {
             <Route path="feed" element={<NewsFeed />} />
             <Route path="kanban" element={<Kanban />} />
           </Route>
-          <Route path="forms">
+          {/* <Route path="forms">
             <Route path="advanced-forms" element={<AdvancedForm />} />
           </Route>
           <Route path="data-tables" element={<DataTables />} />
@@ -195,7 +195,7 @@ export const AppRouter: React.FC = () => {
             <Route path="alert" element={<Alerts />} />
             <Route path="notification" element={<NotificationsUI />} />
             <Route path="skeleton" element={<Skeletons />} />
-          </Route>
+          </Route> */}
         </Route>
         <Route path="/auth" element={<AuthLayoutFallback />}>
           <Route path="login" element={<LoginPage />} />

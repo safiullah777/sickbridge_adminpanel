@@ -16,8 +16,8 @@ interface LoginFormData {
 }
 
 export const initValues: LoginFormData = {
-  email: 'hello@altence.com',
-  password: 'some-test-pass',
+  email: '',
+  password: '',
 };
 
 export const LoginForm: React.FC = () => {
@@ -28,6 +28,11 @@ export const LoginForm: React.FC = () => {
   const [isLoading, setLoading] = useState(false);
 
   const handleSubmit = (values: LoginFormData) => {
+    console.log({ values });
+    if (!values.email.length && !values.password.length) {
+      notificationController.error({ message: 'please fill both fields!!!' });
+      return;
+    }
     setLoading(true);
     dispatch(doLogin(values))
       .then(() => navigate('/'))
@@ -53,13 +58,9 @@ export const LoginForm: React.FC = () => {
             },
           ]}
         >
-          <Auth.FormInput placeholder={t('common.email')} />
+          <Auth.FormInput placeholder={'email'} />
         </Auth.FormItem>
-        <Auth.FormItem
-          label={t('common.password')}
-          name="password"
-          rules={[{ required: true, message: t('common.requiredField') }]}
-        >
+        <Auth.FormItem label={'password'} name="password" rules={[{ required: true, message: 'requiredField' }]}>
           <Auth.FormInputPassword placeholder={t('common.password')} />
         </Auth.FormItem>
         {/* <Auth.ActionsWrapper>

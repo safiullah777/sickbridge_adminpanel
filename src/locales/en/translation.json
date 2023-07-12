@@ -158,7 +158,7 @@
     "notValidEmail": "Please input a valid email address!",
     "error": "Error",
     "feed": "Feed",
-    "firstName": "First Name",
+    "first_name": "First Name",
     "forgotPass": "Forgot Password",
     "forgotPasswordPage": "Forgot password page",
     "formError": "An error has occured",
@@ -171,7 +171,7 @@
     "kanban": "Kanban",
     "keywords": "Any keywords?",
     "kg": "kg",
-    "lastName": "Last Name",
+    "last_name": "Last Name",
     "leafletMap": "Leaflet Maps",
     "loading": "Loading...",
     "lock": "Lock",
@@ -427,7 +427,7 @@
       "firstNameError": "First Name is required",
       "gender": "Gender",
       "info": "Info",
-      "lastNameError": "Last Name is required",
+      "last_nameError": "Last Name is required",
       "location": "Location",
       "login": "Email/Login",
       "loginError": "Email/Login is required",
@@ -697,7 +697,7 @@
         "verify": "Verify"
       }
     },
-    "title": "Profile"
+    "title": "Profiles"
   },
   "progress": {
     "basic": "Basic progress",

@@ -23,7 +23,7 @@ export const Balance: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const userId = useAppSelector((state) => state.user.user?.id);
+  const userId = useAppSelector((state) => state.user?.user?.id);
 
   useEffect(() => {
     userId && getBalance(userId).then((res) => setBalance(res));

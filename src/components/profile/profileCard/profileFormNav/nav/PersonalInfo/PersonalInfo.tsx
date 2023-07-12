@@ -24,7 +24,7 @@ import { PaymentCard } from '@app/interfaces/interfaces';
 
 interface PersonalInfoFormValues {
   birthday?: string;
-  lastName: string;
+  last_name: string;
   country?: string;
   website: string;
   city?: string;
@@ -36,15 +36,15 @@ interface PersonalInfoFormValues {
   language?: string;
   linkedin: string;
   zipcode: string;
-  firstName: string;
+  first_name: string;
   twitter: string;
   phone: string;
   email: string;
 }
 
 const initialPersonalInfoValues: PersonalInfoFormValues = {
-  firstName: '',
-  lastName: '',
+  first_name: '',
+  last_name: '',
   nickName: '',
   sex: undefined,
   birthday: undefined,
@@ -63,7 +63,7 @@ const initialPersonalInfoValues: PersonalInfoFormValues = {
 };
 
 export const PersonalInfo = ({ user }: { user?: any }) => {
-  // const user = useAppSelector((state) => state.user.user);
+  // const user = useAppSelector((state) => state.user?.user);
 
   const [isFieldsChanged, setFieldsChanged] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -72,19 +72,19 @@ export const PersonalInfo = ({ user }: { user?: any }) => {
     () =>
       user
         ? {
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            phone: user.phone_number,
-            nickname: user.userName,
-            sex: user.sex,
-            birthday: Dates.getDate(user.birthday),
-            language: user.lang,
-            country: user.country,
-            city: user.city,
-            address1: user.address1,
+            first_name: user?.first_name,
+            last_name: user?.last_mame,
+            email: user?.email,
+            phone: user?.phone_number,
+            nickname: user?.userName,
+            sex: user?.sex,
+            birthday: Dates.getDate(user?.birthday),
+            language: user?.lang,
+            country: user?.country,
+            city: user?.city,
+            address1: user?.address1,
             address2: user?.address2,
-            zipcode: user.zipcode,
+            zipcode: user?.zipcode,
           }
         : initialPersonalInfoValues,
     [user],
@@ -128,11 +128,11 @@ export const PersonalInfo = ({ user }: { user?: any }) => {
           </Col>
 
           <Col xs={24} md={12}>
-            <FirstNameItem value={user.firstName} />
+            <FirstNameItem value={user?.first_name}  />
           </Col>
 
           <Col xs={24} md={12}>
-            <LastNameItem value={user.lastName} />
+            <LastNameItem value={user?.lastName} />
           </Col>
 
           <Col xs={24} md={12}>
@@ -140,7 +140,7 @@ export const PersonalInfo = ({ user }: { user?: any }) => {
           </Col>
 
           <Col xs={24} md={12}>
-            <BirthdayItem value={user.birthday} />
+            <BirthdayItem value={user?.birthday}  />
           </Col>
 
           <Col span={24}>

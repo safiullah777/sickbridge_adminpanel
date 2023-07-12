@@ -1,6 +1,17 @@
 import axios from 'axios';
 import { httpApi } from './http.api';
 
+export const loginApi = async ({ email, password }: { email: string; password: string }) => {
+  try {
+    const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/user/login`, {
+      email,
+      password,
+    });
+    return res.data || [];
+  } catch (err) {
+    console.log({ err });
+  }
+};
 export const getAllUsers = async ({
   role,
   subRole,
@@ -28,7 +39,11 @@ export const getAllUsers = async ({
 
 export const getAllTransactions = async ({ pageNo, status }: { pageNo: number; status?: string }) => {
   try {
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/checkouts/all?limit=10&page=${pageNo}`);
+    const res = await axios.get(
+      `${process.env.REACT_APP_API_URL}/api/checkouts/all?limit=10&page=${pageNo}${
+        status.toLocaleLowerCase() !== 'all' ? `&status=${status}` : ''
+      }`,
+    );
     return res.data;
   } catch (err) {
     console.log({ err });
@@ -88,50 +103,22 @@ export const setCommissionApi = async ({ clinician, num }: { clinician: boolean;
   }
 };
 
-export const contentManagement = async ({
-  address,
-  aboutImage3File,
-  healthImage1File,
-  healthImage2File,
-  healthImage3File,
-  helpImage1File,
-  helpImage2File,
-  helpImage3File,
-  email,
-  phone,
-  aboutUs,
-  footerBottomText,
-  facebookLink,
-}: {
-  address: string;
-  aboutImage3File: string;
-  healthImage1File: string;
-  healthImage2File: string;
-  healthImage3File: string;
-  helpImage1File: string;
-  helpImage2File: string;
-  helpImage3File: string;
-  email: string;
-  phone: string;
-  aboutUs: string;
-  footerBottomText: string;
-  facebookLink: string;
-}) => {
+export const contentManagement = async (data: any) => {
   const formData = new FormData();
+  const keys = Object.keys(data);
+  keys.forEach((item, index) => {
+    formData.append(item, data[item]);
+  });
 
-  formData.append('address', address);
-  formData.append('aboutImage3', aboutImage3File);
-  formData.append('healthImage1', healthImage1File);
-  formData.append('healthImage2', healthImage2File);
-  formData.append('healthImage3', healthImage3File);
-  formData.append('helpImage1', helpImage1File);
-  formData.append('helpImage2', helpImage2File);
-  formData.append('helpImage3', helpImage3File);
-  formData.append('email', email);
-  formData.append('phone', phone);
-  formData.append('aboutUs', aboutUs);
-  formData.append('footerBottomText', footerBottomText);
-  formData.append('facebookLink', facebookLink);
+  // formData.append('address', address);
+  // formData.append('email', email);
+  // formData.append('contact_no', contact_no);
+  // formData.append('about_us_image', about_us_image);
+  // formData.append('signup_image', signup_image);
+  // formData.append('login_image', login_image);
+  // formData.append('health_solution_images', health_solution_images);
+  // formData.append('help_form_image', help_form_image);
+  // formData.append('footer_bottom_text', footer_bottom_text);
   try {
     const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/content/create`, formData);
     return res;

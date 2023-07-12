@@ -13,8 +13,8 @@ httpApiMock.onPost('login').reply((config) => {
         token: 'bearerToken',
         user: {
           id: 1,
-          firstName: 'Chris',
-          lastName: 'Johnson',
+          first_name: 'Chris',
+          last_name: 'Johnson',
           imgUrl: avatarImg,
           userName: '@john1989',
           email: {

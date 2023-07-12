@@ -14,7 +14,7 @@ import * as S from './TotalEarning.styles';
 export const TotalEarning: React.FC = () => {
   const [totalEarning, setTotalEarning] = useState<ITotalEarning | null>(null);
 
-  const userId = useAppSelector((state) => state.user.user?.id);
+  const userId = useAppSelector((state) => state.user?.user?.id);
 
   const { t } = useTranslation();
 

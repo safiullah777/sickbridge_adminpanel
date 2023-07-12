@@ -12,15 +12,15 @@ import * as Auth from '@app/components/layouts/AuthLayout/AuthLayout.styles';
 import * as S from './SignUpForm.styles';
 
 interface SignUpFormData {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   password: string;
 }
 
 const initValues = {
-  firstName: 'Chris',
-  lastName: 'Johnson',
+  first_name: 'Chris',
+  last_name: 'Johnson',
   email: 'chris.johnson@altence.com',
   password: 'test-pass',
   confirmPassword: 'test-pass',
@@ -56,18 +56,18 @@ export const SignUpForm: React.FC = () => {
       <BaseForm layout="vertical" onFinish={handleSubmit} requiredMark="optional" initialValues={initValues}>
         <S.Title>{t('common.signUp')}</S.Title>
         <Auth.FormItem
-          name="firstName"
-          label={t('common.firstName')}
+          name="first_name"
+          label={t('common.first_name')}
           rules={[{ required: true, message: t('common.requiredField') }]}
         >
-          <Auth.FormInput placeholder={t('common.firstName')} />
+          <Auth.FormInput placeholder={t('common.first_name')} />
         </Auth.FormItem>
         <Auth.FormItem
-          name="lastName"
-          label={t('common.lastName')}
+          name="last_name"
+          label={t('common.last_name')}
           rules={[{ required: true, message: t('common.requiredField') }]}
         >
-          <Auth.FormInput placeholder={t('common.lastName')} />
+          <Auth.FormInput placeholder={t('common.last_name')} />
         </Auth.FormItem>
         <Auth.FormItem
           name="email"
