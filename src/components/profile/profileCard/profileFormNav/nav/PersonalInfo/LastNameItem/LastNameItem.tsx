@@ -8,7 +8,7 @@ export const LastNameItem: React.FC<{ value?: string }> = ({ value }) => {
 
   return (
     <BaseButtonsForm.Item name="last_name" label={'last_name'}>
-      <Input  isDisable={true}  value={value} />
+      <Input isDisable={true} value={value} />
     </BaseButtonsForm.Item>
   );
 };
