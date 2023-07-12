@@ -37,7 +37,7 @@ export const getAllUsers = async ({
   }
 };
 
-export const getAllTransactions = async ({ pageNo, status }: { pageNo: number; status?: string }) => {
+export const getAllTransactions = async ({ pageNo, status }: { pageNo: number; status?: string | any }) => {
   try {
     const res = await axios.get(
       `${process.env.REACT_APP_API_URL}/api/checkouts/all?limit=10&page=${pageNo}${
@@ -120,7 +120,7 @@ export const contentManagement = async (data: any) => {
   // formData.append('help_form_image', help_form_image);
   // formData.append('footer_bottom_text', footer_bottom_text);
   try {
-    const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/content/create`, formData);
+    const res = await axios.post(`http://localhost:4000/api/content/create`, formData);
     return res;
   } catch (err) {
     console.log({ err });

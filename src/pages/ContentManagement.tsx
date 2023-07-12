@@ -71,9 +71,8 @@ const ContentManagement = () => {
     setData((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
   };
   const onUpload = (info: any) => {
-    console.log(info.target.files[0]);
     // setImages((prev) => ({ ...prev, aboutUsImage: info.target.files[0] }));
-    setData((prev) => ({ ...prev, [info.target.name]: [info.target.value] }));
+    setData((prev) => ({ ...prev, [info.target.name]: info.target.files[0] }));
   };
   const handleSubmit = async () => {
     console.log({ data });
