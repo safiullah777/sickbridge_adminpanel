@@ -103,38 +103,22 @@ export const setCommissionApi = async ({ clinician, num }: { clinician: boolean;
   }
 };
 
-export const contentManagement = async ({
-  about_us_image,
-  signup_image,
-  login_image,
-  health_solution_images,
-  help_form_image,
-  contact_no,
-  email,
-  address,
-  footer_bottom_text,
-}: {
-  about_us_image: string;
-  signup_image: string;
-  login_image: string;
-  health_solution_images: string;
-  help_form_image: string;
-  contact_no: string;
-  email: string;
-  address: string;
-  footer_bottom_text: string;
-}) => {
+export const contentManagement = async (data: any) => {
   const formData = new FormData();
+  const keys = Object.keys(data);
+  keys.forEach((item, index) => {
+    formData.append(item, data[item]);
+  });
 
-  formData.append('address', address);
-  formData.append('email', email);
-  formData.append('contact_no', contact_no);
-  formData.append('about_us_image', about_us_image);
-  formData.append('signup_image', signup_image);
-  formData.append('login_image', login_image);
-  formData.append('health_solution_images', health_solution_images);
-  formData.append('help_form_image', help_form_image);
-  formData.append('footer_bottom_text', footer_bottom_text);
+  // formData.append('address', address);
+  // formData.append('email', email);
+  // formData.append('contact_no', contact_no);
+  // formData.append('about_us_image', about_us_image);
+  // formData.append('signup_image', signup_image);
+  // formData.append('login_image', login_image);
+  // formData.append('health_solution_images', health_solution_images);
+  // formData.append('help_form_image', help_form_image);
+  // formData.append('footer_bottom_text', footer_bottom_text);
   try {
     const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/content/create`, formData);
     return res;

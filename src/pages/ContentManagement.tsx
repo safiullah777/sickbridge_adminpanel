@@ -2,6 +2,7 @@ import { Col, Input, Typography, Row, Upload, Button, Card, Space, Modal } from 
 import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import { RcFile, UploadChangeParam, UploadFile, UploadProps } from 'antd/lib/upload';
+import { contentManagement } from '@app/api/user';
 const getBase64 = (file: RcFile | any): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -55,19 +56,15 @@ const ContentManagement = () => {
     </div>
   );
   const [data, setData] = useState({
-    address: '',
-    aboutImage3File: '',
-    healthImage1File: '',
-    healthImage2File: '',
-    healthImage3File: '',
-    helpImage1File: '',
-    helpImage2File: '',
-    helpImage3File: '',
+    about_us_image: '',
+    signup_image: '',
+    login_image: '',
+    health_solution_images: '',
+    help_form_image: '',
+    contact_no: '',
     email: '',
-    phone: '',
-    aboutUs: '',
-    footerBottomText: '',
-    facebookLink: '',
+    address: '',
+    footer_bottom_text: '',
   });
   const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     console.log({ fileList });
@@ -75,7 +72,12 @@ const ContentManagement = () => {
   };
   const onUpload = (info: any) => {
     console.log(info.target.files[0]);
-    setImages((prev) => ({ ...prev, aboutUsImage: info.target.files[0] }));
+    // setImages((prev) => ({ ...prev, aboutUsImage: info.target.files[0] }));
+    setData((prev) => ({ ...prev, [info.target.name]: [info.target.value] }));
+  };
+  const handleSubmit = async () => {
+    console.log({ data });
+    await contentManagement(data);
   };
   return (
     <>
@@ -99,7 +101,7 @@ const ContentManagement = () => {
           </div>
           <div>
             <Typography>Phone Number: </Typography>
-            <Input size="middle" name="phone" onChange={onChange} placeholder="+723467" />
+            <Input size="middle" name="contact_no" onChange={onChange} placeholder="+723467" />
           </div>
           {/* <div>
             <Typography>About US: </Typography>
@@ -114,14 +116,13 @@ const ContentManagement = () => {
             <Typography>Footer Bottom Text: </Typography>
             <Input.TextArea
               size="middle"
-              name="footerBottomText"
+              name="footer_bottom_text"
               onChange={onChange}
               placeholder="Like: Copyright 2022 - All Rights Reserved"
             ></Input.TextArea>
           </div>
         </div>
       </Card>
-      
 
       <Card title="Images" style={{ margin: '20px 0' }}>
         <div
@@ -147,7 +148,7 @@ const ContentManagement = () => {
                 maxWidth: 375,
               }}
             />
-            <input onChange={onUpload} type="file" accept="image/*" name="aboutImage3File" />
+            <input onChange={onUpload} type="file" accept="image/*" name="about_us_image" />
             {/* <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </input> */}
           </div>
@@ -167,9 +168,10 @@ const ContentManagement = () => {
                 maxWidth: 375,
               }}
             />
-            <Upload>
+            {/* <Upload name='health_solution_images'>
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
-            </Upload>
+            </Upload> */}
+            <input onChange={onUpload} type="file" accept="image/*" name="health_solution_images" />
           </div>
           <hr />
           <div
@@ -187,9 +189,10 @@ const ContentManagement = () => {
                 maxWidth: 375,
               }}
             />
-            <Upload>
+            {/* <Upload>
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
-            </Upload>
+            </Upload> */}
+            <input onChange={onUpload} type="file" accept="image/*" name="help_form_image" />
           </div>
         </div>
         <div
@@ -199,7 +202,7 @@ const ContentManagement = () => {
             justifyContent: 'flex-end',
           }}
         >
-          <Button type="primary" onClick={() => console.log({ fileList })}>
+          <Button type="primary" onClick={() => handleSubmit()}>
             Update
           </Button>
         </div>
