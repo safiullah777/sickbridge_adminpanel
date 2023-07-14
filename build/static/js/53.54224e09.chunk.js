@@ -1,0 +1,2 @@
+(this["webpackJsonplightence-admin"]=this["webpackJsonplightence-admin"]||[]).push([[53],{2440:function(e,c,n){"use strict";n.r(c);n(0);var t=n(32),i=n(37),s=n(2);c.default=function(){return Object(s.jsx)(i.r,{children:Object(s.jsx)(i.d,{children:Object(s.jsx)(i.m,{children:Object(s.jsx)(t.b,{})})})})}}}]);
+//# sourceMappingURL=53.54224e09.chunk.js.map
