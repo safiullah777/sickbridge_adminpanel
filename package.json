@@ -71,7 +71,7 @@
     "workbox-streams": "^5.1.3"
   },
   "scripts": {
-    "start": "NODE_OPTIONS=--openssl-legacy-provider && yarn buildThemes && craco start",
+    "start": "SET NODE_OPTIONS=--openssl-legacy-provider && yarn buildThemes && craco start",
     "build": "yarn buildThemes && craco build",
     "test": "craco test",
     "eject": "craco eject",
