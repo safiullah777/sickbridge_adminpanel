@@ -11,8 +11,9 @@ app.get('/', function (req, res) {
 });
 // Any Page Redirects to the pre-build assets folder index.html that // will load the react app
 app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, '..', 'build/index.html'));
+  const index = path.join(__dirname, 'build', 'index.html');
+  res.sendFile(index);
 });
-app.listen(port, () => {
+app.listen(3000, () => {
   console.log('Server is running on port: ', port);
 });
