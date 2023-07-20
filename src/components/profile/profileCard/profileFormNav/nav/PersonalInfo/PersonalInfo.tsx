@@ -128,7 +128,7 @@ export const PersonalInfo = ({ user }: { user?: any }) => {
           </Col>
 
           <Col xs={24} md={12}>
-            <FirstNameItem value={user?.first_name}  />
+            <FirstNameItem value={user?.first_name} />
           </Col>
 
           <Col xs={24} md={12}>
@@ -140,7 +140,7 @@ export const PersonalInfo = ({ user }: { user?: any }) => {
           </Col>
 
           <Col xs={24} md={12}>
-            <BirthdayItem value={user?.birthday}  />
+            <BirthdayItem value={user?.birthday} />
           </Col>
 
           <Col span={24}>

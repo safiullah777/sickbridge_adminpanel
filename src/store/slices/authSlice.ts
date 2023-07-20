@@ -35,7 +35,9 @@ export const doLogin = createAsyncThunk('auth/doLogin', async (loginPayload: Log
       }
       notificationController.error({ message: 'Invalid Credentials' });
     })
-    .catch(() => {}),
+    .catch((err) => {
+      console.log('error', err);
+    }),
 );
 
 export const doSignUp = createAsyncThunk('auth/doSignUp', async (signUpPayload: SignUpRequest) =>
