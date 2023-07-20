@@ -1,1 +1,1 @@
-web: yarn buildThemes && craco start
+web: npm start
