@@ -72,7 +72,9 @@
     "workbox-streams": "^5.1.3"
   },
   "scripts": {
-    "start": "export NODE_OPTIONS=--openssl-legacy-provider && yarn buildThemes && craco start",
+    "start": "yarn build && craco start",
+    "heroku-postbuild": "yarn buildThemes && craco build",
+    "dev": "export NODE_OPTIONS=--openssl-legacy-provider && yarn buildThemes && craco start",
     "build": "yarn buildThemes && craco build",
     "test": "craco test",
     "eject": "craco eject",
