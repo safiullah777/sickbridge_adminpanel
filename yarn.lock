@@ -11378,6 +11378,7 @@ __metadata:
     typescript: ^4.1.2
     uuid: ^8.3.2
     web-vitals: ^1.0.1
+    webpack: 4.44.2
     webpack-bundle-analyzer: ^4.4.2
     webpackbar: ^5.0.0-3
     workbox-background-sync: ^5.1.3
