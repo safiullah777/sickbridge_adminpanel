@@ -58,7 +58,6 @@
     "typescript": "^4.1.2",
     "uuid": "^8.3.2",
     "web-vitals": "^1.0.1",
-    "webpack": "4.44.2",
     "workbox-background-sync": "^5.1.3",
     "workbox-broadcast-update": "^5.1.3",
     "workbox-cacheable-response": "^5.1.3",
@@ -129,7 +128,7 @@
     "*/**/*.{js,ts,tsx}": "yarn lint"
   },
   "engines": {
-    "node": "18.x",
+    "node": "18.17.0",
     "yarn": "3.x"
   },
   "resolutions": {
