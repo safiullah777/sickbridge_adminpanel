@@ -4,7 +4,7 @@ import { PageTitle } from '@app/components/common/PageTitle/PageTitle';
 import { BasicTable } from '@app/components/tables/BasicTable/BasicTable';
 import { EditableTable } from '@app/components/tables/editableTable/EditableTable';
 import { TablesWrapper } from '@app/components/tables/Tables/Tables.styles';
-import { Avatar, Button, Col, Modal, Row, Space } from 'antd';
+import { Avatar, Button, Col, Modal, Row, Space, Typography } from 'antd';
 import { Select, Option } from '@app/components/common/selects/Select/Select';
 import { ColumnsType } from 'antd/es/table';
 // import { Option } from 'antd/lib/mentions';
@@ -253,7 +253,7 @@ const Clinician: FC = () => {
         </div>
       </Modal>
       <Col style={{ gap: '10px' }}>
-        <span style={{ color: '#000', fontSize: 20, fontWeight: 700 }}>Sickbridge Commission(%):</span>
+        <Typography.Text style={{ fontSize: 20, fontWeight: 700 }}>Sickbridge Commission(%):</Typography.Text>
         <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginTop: 20 }}>
           <Input
             value={Commission}
@@ -309,7 +309,6 @@ const Clinician: FC = () => {
           <Button onClick={onSearch}>Apply</Button>
         </Row>
         <Card id="basic-table" $autoHeight title={t('Patients')} $padding="1.25rem 1.25rem 0">
-          {console.log({ pageNo })}
           <Table
             columns={columns}
             dataSource={patients}
@@ -321,6 +320,7 @@ const Clinician: FC = () => {
               },
               total: totalPages * limit,
             }}
+            scroll={{ x: 800 }}
             loading={loading}
           />
         </Card>

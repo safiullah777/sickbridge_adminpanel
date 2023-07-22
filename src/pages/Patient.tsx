@@ -4,7 +4,7 @@ import { PageTitle } from '@app/components/common/PageTitle/PageTitle';
 import { BasicTable } from '@app/components/tables/BasicTable/BasicTable';
 import { EditableTable } from '@app/components/tables/editableTable/EditableTable';
 import { TablesWrapper } from '@app/components/tables/Tables/Tables.styles';
-import { Avatar, Button, Col, Modal, Row, Space } from 'antd';
+import { Avatar, Button, Col, Modal, Row, Space, Typography } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -223,7 +223,7 @@ const Patient: FC = () => {
         </div>
       </Modal>
       <Col style={{ gap: '10px' }}>
-        <span style={{ color: '#000', fontSize: 20, fontWeight: 700 }}>Sickbridge Commission(%):</span>
+        <Typography.Text style={{ fontSize: 20, fontWeight: 700 }}>Sickbridge Commission(%):</Typography.Text>
         <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginTop: 20 }}>
           <Input
             value={Commission}

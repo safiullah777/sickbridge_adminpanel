@@ -107,11 +107,6 @@ export const setCommissionApi = async ({ clinician, num }: { clinician: boolean;
 
 export const contentManagement = async (data: any) => {
   const formData = new FormData();
-  const keys = Object.keys(data);
-  keys.forEach((item) => {
-    formData.append(item, data[item]);
-  });
-
   for (const key in data) {
     if (data.hasOwnProperty(key) && !isEmpty(data[key]) && data[key] !== 'undefined') {
       formData.append(key, data[key]);
