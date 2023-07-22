@@ -3,11 +3,11 @@ import { AxiosError } from 'axios';
 import { ApiError } from '@app/api/ApiError';
 import { readToken } from '@app/services/localStorage.service';
 
-export const httpApi:AxiosInstance = axios.create({
+export const httpApi: AxiosInstance = axios.create({
   baseURL: 'http://localhost:4000/api',
   headers: {
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
 });
 
 // httpApi.interceptors.request.use((config) => {

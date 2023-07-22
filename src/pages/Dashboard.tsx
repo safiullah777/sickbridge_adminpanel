@@ -144,7 +144,7 @@ const Dashboard: React.FC = () => {
                 }}
               >
                 <Typography.Text>All</Typography.Text>
-                <Typography.Text style={{ fontSize: 30 }}>{data.paid_transac+data.pend_transac}</Typography.Text>
+                <Typography.Text style={{ fontSize: 30 }}>{data.paid_transac + data.pend_transac}</Typography.Text>
               </Card>
               <Card
                 hoverable

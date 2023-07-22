@@ -77,7 +77,7 @@ const Clinician: FC = () => {
   const [pageNo, setPageNo] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [Commission, setCommission] = useState(0);
-  const [limit,setLimit]=useState(10)
+  const [limit, setLimit] = useState(10);
   const [block, setBlock] = useState({
     show: false,
     reason: '',
@@ -105,7 +105,7 @@ const Clinician: FC = () => {
           )
         : setPatients([]);
       setLoading(false);
-      console.log(res?.metaData?.numOfPages)
+      console.log(res?.metaData?.numOfPages);
     };
     fetchData();
   }, []);
@@ -161,8 +161,7 @@ const Clinician: FC = () => {
     setBlock((prev) => ({ ...prev, loading: true }));
     const res = await changeStatus({ reason: block.reason, status, userId: modalInfo._id });
     setBlock((prev) => ({ ...prev, loading: false }));
-    let temp: any;
-    temp = patients.map((item: any) => {
+    const temp: any = patients.map((item: any) => {
       return item?._id == modalInfo._id ? { ...item, status: status == 'block' ? 'block' : 'active' } : item;
     });
     // setPatients(temp);
@@ -320,10 +319,9 @@ const Clinician: FC = () => {
               onChange: (page: any) => {
                 fetch(page);
               },
-              total: totalPages*limit,
+              total: totalPages * limit,
             }}
             loading={loading}
-            
           />
         </Card>
       </TablesWrapper>

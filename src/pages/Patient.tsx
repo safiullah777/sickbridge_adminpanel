@@ -132,8 +132,7 @@ const Patient: FC = () => {
     setBlock((prev) => ({ ...prev, loading: true }));
     const res = await changeStatus({ reason: block.reason, status, userId: modalInfo._id });
     setBlock((prev) => ({ ...prev, loading: false }));
-    let temp: any;
-    temp = patients.map((item: any) => {
+    const temp: any = patients.map((item: any) => {
       return item?._id == modalInfo._id ? { ...item, status: status == 'block' ? 'block' : 'active' } : item;
     });
     // setPatients(temp);

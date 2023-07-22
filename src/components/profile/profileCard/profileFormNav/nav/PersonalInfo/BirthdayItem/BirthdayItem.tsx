@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { BaseButtonsForm } from '@app/components/common/forms/BaseButtonsForm/BaseButtonsForm';
 import * as S from './BirthdayItem.styles';
 
-export const BirthdayItem: React.FC<{value?:any}> = ({value}) => {
+export const BirthdayItem: React.FC<{ value?: any }> = ({ value }) => {
   const { t } = useTranslation();
 
   return (

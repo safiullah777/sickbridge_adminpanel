@@ -10,7 +10,7 @@ export const SexItem: React.FC = () => {
 
   return (
     <BaseButtonsForm.Item name="sex" label={t('profile.nav.personalInfo.sex')}>
-      <Select  disabled={true} >
+      <Select disabled={true}>
         <Option value="male">
           <Space align="center">
             <ManOutlined />
