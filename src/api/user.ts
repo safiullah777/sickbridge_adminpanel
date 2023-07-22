@@ -95,9 +95,20 @@ export const getStats = async ({}) => {
 
 export const setCommissionApi = async ({ clinician, num }: { clinician: boolean; num: number }) => {
   try {
-    const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/payment/create`, {
-      [!clinician ? 'patientFee' : 'appCommission']: num,
-    });
+    const accessToken = localStorage.getItem('accessToken');
+    console.log({ accessToken });
+    const res = await axios.post(
+      `${process.env.REACT_APP_API_URL}/api/payment/create`,
+      {
+        [!clinician ? 'patientFee' : 'appCommission']: num,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    console.log({res})
     return res.data;
   } catch (err) {
     console.log({ err });
