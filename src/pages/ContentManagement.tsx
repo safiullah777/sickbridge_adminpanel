@@ -1,8 +1,8 @@
 import { Col, Input, Typography, Row, Upload, Button, Card, Space, Modal } from 'antd';
 import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RcFile, UploadChangeParam, UploadFile, UploadProps } from 'antd/lib/upload';
-import { contentManagement } from '@app/api/user';
+import { contentManagement, getContent } from '@app/api/user';
 const getBase64 = (file: RcFile | any): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -11,21 +11,6 @@ const getBase64 = (file: RcFile | any): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 
-export function getImageUrl(image: any) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      resolve(reader.result);
-    };
-
-    reader.onerror = (error) => {
-      reject(error);
-    };
-
-    reader.readAsDataURL(image);
-  });
-}
 const ContentManagement = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
@@ -66,21 +51,59 @@ const ContentManagement = () => {
     address: '',
     footer_bottom_text: '',
   });
-  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    console.log({ fileList });
-    setData((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
+
+  const [imagesPreview, setImagesPreview] = useState({
+    about_us_image: '',
+    health_solution_images: '',
+    help_form_image: '',
+    signup_image: '',
+    login_image: '',
+  });
+
+  function getImageUrl(e: any) {
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      setImagesPreview((prev) => ({ ...prev, [e.target.name]: reader.result }));
+    };
+
+    reader.readAsDataURL(e.target.files[0]);
+  }
+
+  const onChange = async (e: any) => {
+    if (e.target.type === 'file') {
+      setData((prev) => ({ ...prev, [e.target.name]: e.target.files[0] }));
+      getImageUrl(e);
+    } else {
+      setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
   };
-  const onUpload = (info: any) => {
-    console.log(info.target.files[0]);
-    // setImages((prev) => ({ ...prev, aboutUsImage: info.target.files[0] }));
-    setData((prev) => ({ ...prev, [info.target.name]: [info.target.value] }));
-  };
+
   const handleSubmit = async () => {
     console.log({ data });
-    await contentManagement(data);
+    const res = await contentManagement(data);
   };
+
+  useEffect(() => {
+    getContent().then((res) => {
+      setData((prev: any) => ({
+        ...prev,
+        email: res?.data?.data?.email,
+        address: res?.data?.data?.address,
+        contact_no: res?.data?.data?.contact_no,
+        footer_bottom_text: res?.data?.data?.footer_bottom_text,
+      }));
+      setImagesPreview((prev: any) => ({
+        ...prev,
+        about_us_image: res?.data?.data?.about_us_image,
+        health_solution_images: res?.data?.data?.health_solution_images,
+        help_form_image: res?.data?.data?.help_form_image,
+      }));
+    });
+  }, []);
   return (
     <>
+      {console.log('Image Prev: ', imagesPreview)}
       <Typography.Title level={1}>Content Management</Typography.Title>
       <Card title="Website Information" style={{ margin: '20px 0' }}>
         <div
@@ -93,15 +116,15 @@ const ContentManagement = () => {
         >
           <div>
             <Typography>Adress: </Typography>
-            <Input size="middle" onChange={onChange} name="address" placeholder="abc street" />
+            <Input size="middle" onChange={onChange} name="address" placeholder="abc street" value={data?.address} />
           </div>
           <div>
             <Typography>Email: </Typography>
-            <Input size="middle" name="email" onChange={onChange} placeholder="abc@mail.com" />
+            <Input size="middle" name="email" onChange={onChange} placeholder="abc@mail.com" value={data?.email} />
           </div>
           <div>
             <Typography>Phone Number: </Typography>
-            <Input size="middle" name="contact_no" onChange={onChange} placeholder="+723467" />
+            <Input size="middle" name="contact_no" onChange={onChange} placeholder="+723467" value={data?.contact_no} />
           </div>
           {/* <div>
             <Typography>About US: </Typography>
@@ -117,6 +140,7 @@ const ContentManagement = () => {
             <Input.TextArea
               size="middle"
               name="footer_bottom_text"
+              value={data?.footer_bottom_text}
               onChange={onChange}
               placeholder="Like: Copyright 2022 - All Rights Reserved"
             ></Input.TextArea>
@@ -142,13 +166,16 @@ const ContentManagement = () => {
           >
             <Typography>About Us Section Image: </Typography>
             <img
-              src={'https://sickbridge-client.surge.sh/static/media/healthSolutions.03e9a7bfe0a64783b977.png'}
+              src={
+                imagesPreview?.about_us_image ||
+                'https://sickbridge-client.surge.sh/static/media/healthSolutions.03e9a7bfe0a64783b977.png'
+              }
               alt=""
               style={{
                 maxWidth: 375,
               }}
             />
-            <input onChange={onUpload} type="file" accept="image/*" name="about_us_image" />
+            <input onChange={onChange} type="file" accept="image/*" name="about_us_image" />
             {/* <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </input> */}
           </div>
@@ -162,7 +189,10 @@ const ContentManagement = () => {
           >
             <Typography>Health Solution Section Image: </Typography>
             <img
-              src="https://sickbridge-client.surge.sh/static/media/healthSolutions.03e9a7bfe0a64783b977.png"
+              src={
+                imagesPreview?.health_solution_images ||
+                'https://sickbridge-client.surge.sh/static/media/healthSolutions.03e9a7bfe0a64783b977.png'
+              }
               alt=""
               style={{
                 maxWidth: 375,
@@ -171,7 +201,7 @@ const ContentManagement = () => {
             {/* <Upload name='health_solution_images'>
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload> */}
-            <input onChange={onUpload} type="file" accept="image/*" name="health_solution_images" />
+            <input onChange={onChange} type="file" accept="image/*" name="health_solution_images" />
           </div>
           <hr />
           <div
@@ -183,7 +213,10 @@ const ContentManagement = () => {
           >
             <Typography>Help Form Image: </Typography>
             <img
-              src="https://sickbridge-client.surge.sh/static/media/healthSolutions.03e9a7bfe0a64783b977.png"
+              src={
+                imagesPreview?.help_form_image ||
+                'https://sickbridge-client.surge.sh/static/media/healthSolutions.03e9a7bfe0a64783b977.png'
+              }
               alt=""
               style={{
                 maxWidth: 375,
@@ -192,7 +225,53 @@ const ContentManagement = () => {
             {/* <Upload>
               <Button icon={<UploadOutlined />}>Click to Upload</Button>
             </Upload> */}
-            <input onChange={onUpload} type="file" accept="image/*" name="help_form_image" />
+            <input onChange={onChange} type="file" accept="image/*" name="help_form_image" />
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 10,
+            }}
+          >
+            <Typography>Login Image: </Typography>
+            <img
+              src={
+                imagesPreview?.login_image ||
+                'https://sickbridge-client.surge.sh/static/media/healthSolutions.03e9a7bfe0a64783b977.png'
+              }
+              alt=""
+              style={{
+                maxWidth: 375,
+              }}
+            />
+            {/* <Upload>
+              <Button icon={<UploadOutlined />}>Click to Upload</Button>
+            </Upload> */}
+            <input onChange={onChange} type="file" accept="image/*" name="login_image" />
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 10,
+            }}
+          >
+            <Typography>Signup Image: </Typography>
+            <img
+              src={
+                imagesPreview?.signup_image ||
+                'https://sickbridge-client.surge.sh/static/media/healthSolutions.03e9a7bfe0a64783b977.png'
+              }
+              alt=""
+              style={{
+                maxWidth: 375,
+              }}
+            />
+            {/* <Upload>
+              <Button icon={<UploadOutlined />}>Click to Upload</Button>
+            </Upload> */}
+            <input onChange={onChange} type="file" accept="image/*" name="signup_image" />
           </div>
         </div>
         <div

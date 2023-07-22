@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { httpApi } from './http.api';
+import isEmpty from 'is-empty';
+import { notificationController } from '@app/controllers/notificationController';
 
 export const loginApi = async ({ email, password }: { email: string; password: string }) => {
   try {
@@ -105,22 +107,30 @@ export const setCommissionApi = async ({ clinician, num }: { clinician: boolean;
 
 export const contentManagement = async (data: any) => {
   const formData = new FormData();
-  const keys = Object.keys(data);
-  keys.forEach((item, index) => {
-    formData.append(item, data[item]);
-  });
 
-  // formData.append('address', address);
-  // formData.append('email', email);
-  // formData.append('contact_no', contact_no);
-  // formData.append('about_us_image', about_us_image);
-  // formData.append('signup_image', signup_image);
-  // formData.append('login_image', login_image);
-  // formData.append('health_solution_images', health_solution_images);
-  // formData.append('help_form_image', help_form_image);
-  // formData.append('footer_bottom_text', footer_bottom_text);
+  for (const key in data) {
+    if (data.hasOwnProperty(key) && !isEmpty(data[key]) && data[key] !== 'undefined') {
+      formData.append(key, data[key]);
+    }
+  }
+
   try {
-    const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/content/create`, formData);
+    const config = { headers: { 'Content-type': 'multipart/form-data' } };
+    const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/content/create`, formData, config);
+    console.log({ res });
+    if (res.status == 200) {
+      notificationController.success({ message: 'data uploaded successfully' });
+    }
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getContent = async () => {
+  try {
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/content/`);
+
     return res;
   } catch (err) {
     console.log({ err });
