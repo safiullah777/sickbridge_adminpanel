@@ -108,7 +108,6 @@ export const setCommissionApi = async ({ clinician, num }: { clinician: boolean;
         },
       },
     );
-    console.log({res})
     return res.data;
   } catch (err) {
     console.log({ err });
