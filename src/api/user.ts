@@ -108,7 +108,7 @@ export const setCommissionApi = async ({ clinician, num }: { clinician: boolean;
         },
       },
     );
-    console.log({res})
+    console.log({ res });
     return res.data;
   } catch (err) {
     console.log({ err });
@@ -137,12 +137,118 @@ export const contentManagement = async (data: any) => {
   }
 };
 
+export const createService = async (data: any) => {
+  const formData = new FormData();
+  for (const key in data) {
+    if (data.hasOwnProperty(key) && !isEmpty(data[key]) && data[key] !== 'undefined') {
+      formData.append(key, data[key]);
+    }
+  }
+  console.log({ formData });
+  try {
+    const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/contentServices`, formData, {
+      headers: { 'Content-type': 'multipart/form-data' },
+    });
+    console.log({ res });
+    if (res.status == 200) {
+      notificationController.success({ message: 'serivce created successfully' });
+    }
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const editService = async (data: any, id = '') => {
+  const formData = new FormData();
+  for (const key in data) {
+    if (data.hasOwnProperty(key) && !isEmpty(data[key]) && data[key] !== 'undefined') {
+      formData.append(key, data[key]);
+    }
+  }
+  console.log({ data });
+  try {
+    const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/contentServices/${id}`, formData, {
+      headers: { 'Content-type': 'multipart/form-data' },
+    });
+    console.log({ res });
+    if (res.status == 200) {
+      notificationController.success({ message: 'serivce created successfully' });
+    }
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const createTestimonial = async (data: any) => {
+  const formData = new FormData();
+  for (const key in data) {
+    if (data.hasOwnProperty(key) && !isEmpty(data[key]) && data[key] !== 'undefined') {
+      formData.append(key, data[key]);
+    }
+  }
+  console.log({ formData });
+  try {
+    const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/contentTestimonials`, formData, {
+      headers: { 'Content-type': 'multipart/form-data' },
+    });
+    console.log({ res });
+    if (res.status == 200) {
+      notificationController.success({ message: 'serivce created successfully' });
+    }
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const editTestimonial = async (data: any, id = '') => {
+  const formData = new FormData();
+  for (const key in data) {
+    if (data.hasOwnProperty(key) && !isEmpty(data[key]) && data[key] !== 'undefined') {
+      formData.append(key, data[key]);
+    }
+  }
+  try {
+    const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/contentTestimonials/${id}`, formData, {
+      headers: { 'Content-type': 'multipart/form-data' },
+    });
+    console.log({ res });
+    if (res.status == 200) {
+      notificationController.success({ message: 'serivce updated successfully' });
+    }
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const getContent = async () => {
   try {
     const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/content/`);
-
+    console.log({ res });
     return res;
   } catch (err) {
     console.log({ err });
+  }
+};
+
+export const deleteCard = async ({ id, service = true }: { id: string; service: boolean }) => {
+  try {
+    const res = await axios.delete(
+      `${process.env.REACT_APP_API_URL}/api/${service ? 'contentServices' : 'contentTestimonials'}/${id}`,
+    );
+    if (res.status === 200) {
+      notificationController.success({
+        message: service ? 'service deleted successfully' : 'testimonial deleted successfully',
+      });
+      return true;
+    }
+    notificationController.error({ message: 'something went wrong!' });
+    return false;
+  } catch (err) {
+    notificationController.error({ message: 'something went wrong!' });
+    return false;
   }
 };

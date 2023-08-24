@@ -19,7 +19,7 @@ export const LanguageItem: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <BaseButtonsForm.Item  name="language" label={t('profile.nav.personalInfo.language')}>
+    <BaseButtonsForm.Item name="language" label={t('profile.nav.personalInfo.language')}>
       <Select disabled>{languageOptions}</Select>
     </BaseButtonsForm.Item>
   );

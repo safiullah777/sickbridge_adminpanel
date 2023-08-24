@@ -91,11 +91,11 @@ const Transaction: FC = () => {
           ? setTrans(
               res?.data.map((item: any, index: number) => ({
                 ...item,
-                fromName: item?.checkoutBy.first_name + ' ' + item?.checkoutBy.last_name,
-                fromEmail: item?.checkoutBy.email,
-                toName: item?.checkoutTo.first_name + ' ' + item?.checkoutTo.last_name,
-                toEmail: item?.checkoutTo.email,
-                amount: item.amounts.consultationTotalFee,
+                fromName: item?.checkoutBy?.first_name + ' ' + item?.checkoutBy?.last_name,
+                fromEmail: item?.checkoutBy?.email,
+                toName: item?.checkoutTo?.first_name + ' ' + item?.checkoutTo?.last_name,
+                toEmail: item?.checkoutTo?.email,
+                amount: item?.amounts?.consultationTotalFee,
                 createdAt: new Date(item?.createdAt).toLocaleDateString(),
               })),
             )
@@ -113,13 +113,13 @@ const Transaction: FC = () => {
       const res = await getAllTransactions({ pageNo, status });
       res?.data
         ? setTrans(
-            res?.data.map((item: any, index: number) => ({
+            res?.data.map((item: any) => ({
               ...item,
-              fromName: item?.checkoutBy.first_name + ' ' + item?.checkoutBy.last_name,
-              fromEmail: item?.checkoutBy.email,
-              toName: item?.checkoutTo.first_name + ' ' + item?.checkoutTo.last_name,
-              toEmail: item?.checkoutTo.email,
-              amount: item.amounts.consultationTotalFee,
+              fromName: item?.checkoutBy?.first_name + ' ' + item?.checkoutBy?.last_name,
+              fromEmail: item?.checkoutBy?.email,
+              toName: item?.checkoutTo?.first_name + ' ' + item?.checkoutTo?.last_name,
+              toEmail: item?.checkoutTo?.email,
+              amount: item?.amounts?.consultationTotalFee,
               createdAt: new Date(item?.createdAt).toLocaleDateString(),
             })),
           )
