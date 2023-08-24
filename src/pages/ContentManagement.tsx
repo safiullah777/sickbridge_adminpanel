@@ -241,7 +241,7 @@ const ContentManagement = () => {
       data.card_image = testimonialData.card_image;
     }
     setModalLoading({ edit: modalLoading.edit, loading: true });
-    const res = type == 'service' ? await edit({ ...data }) : await createTestimonial({ ...data });
+    const res = type == 'service' ? await editTestimonial({ ...data }) : await createTestimonial({ ...data });
     if (type == 'service') {
       setServiceData({ card_image: '', description: '', title: '', id: '' });
       setShowModal((prev) => ({ ...prev, service: false }));
