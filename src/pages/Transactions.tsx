@@ -157,14 +157,13 @@ const Transaction: FC = () => {
         onOk={() => setIsBasicModalOpen(false)}
         onCancel={() => setIsBasicModalOpen(false)}
       >
-        {console.log({ modalData })}
         <Row gutter={[20, 20]}>
           <Divider>From:</Divider>
           <Col md={24}>
             <Col>
               <Space>
                 <Typography.Text style={{ fontSize: 16 }}>Name:</Typography.Text>
-                <Typography.Text type="secondary">
+                <Typography.Text>
                   {modalData?.checkoutBy?.first_name + ' ' + modalData?.checkoutBy?.last_name}
                 </Typography.Text>
               </Space>
@@ -172,7 +171,7 @@ const Transaction: FC = () => {
             <Col>
               <Space>
                 <Typography.Text style={{ fontSize: 16 }}>Email:</Typography.Text>
-                <Typography.Text type="secondary">{modalData?.checkoutBy?.email}</Typography.Text>
+                <Typography.Text>{modalData?.checkoutBy?.email}</Typography.Text>
               </Space>
             </Col>
           </Col>
@@ -182,7 +181,7 @@ const Transaction: FC = () => {
               <Col>
                 <Space>
                   <Typography.Text style={{ fontSize: 16 }}>Name:</Typography.Text>
-                  <Typography.Text type="secondary">
+                  <Typography.Text>
                     {modalData?.checkoutTo?.first_name + ' ' + modalData?.checkoutTo?.last_name}
                   </Typography.Text>
                 </Space>
@@ -190,7 +189,7 @@ const Transaction: FC = () => {
               <Col>
                 <Space>
                   <Typography.Text style={{ fontSize: 16 }}>Email:</Typography.Text>
-                  <Typography.Text type="secondary">{modalData?.checkoutTo?.email}</Typography.Text>
+                  <Typography.Text>{modalData?.checkoutTo?.email}</Typography.Text>
                 </Space>
               </Col>
             </Col>
@@ -200,13 +199,13 @@ const Transaction: FC = () => {
         <Col>
           <Space>
             <Typography.Text style={{ fontSize: 16 }}>Date of Transaction:</Typography.Text>
-            <Typography.Text type="secondary">{modalData?.createdAt}</Typography.Text>
+            <Typography.Text>{modalData?.createdAt}</Typography.Text>
           </Space>
         </Col>
         <Col>
           <Space>
             <Typography.Text style={{ fontSize: 16 }}>Amount:</Typography.Text>
-            <Typography.Text type="secondary">${modalData?.amount}</Typography.Text>
+            <Typography.Text>${modalData?.amount}</Typography.Text>
           </Space>
         </Col>
         {/* <p>Issued on: 12/01/2023</p> */}

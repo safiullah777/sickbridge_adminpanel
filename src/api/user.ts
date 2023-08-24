@@ -108,6 +108,7 @@ export const setCommissionApi = async ({ clinician, num }: { clinician: boolean;
         },
       },
     );
+    notificationController.success({ message: 'commision set successfully' });
     console.log({ res });
     return res.data;
   } catch (err) {
