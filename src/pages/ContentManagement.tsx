@@ -192,7 +192,7 @@ const ContentManagement = () => {
         health_solution_images: res?.data?.data?.content?.health_solution_images,
         help_form_image: res?.data?.data?.content?.help_form_image,
         signup_image: res?.data?.data?.content?.signup_image,
-        login_image:  res?.data?.data?.content?.login_image,
+        login_image: res?.data?.data?.content?.login_image,
       }));
       setServices(res?.data?.data?.contentServices || []);
       setTestimonials(res?.data?.data?.contentTestimonials || []);
